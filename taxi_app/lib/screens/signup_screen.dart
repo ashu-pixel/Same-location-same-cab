@@ -1,10 +1,32 @@
 import 'package:flutter/material.dart';
 
 import './login_screen.dart';
+import '../widgets/ui_Container.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
 
   static const routeName = '/signup';
+
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+
+  bool _obscureText = true;
+  bool _obscureText1 = true;
+
+  void _toggleSeen(){
+    setState(() {
+      _obscureText = !_obscureText;
+    });   
+  }
+
+  void _toggleSeen1(){
+    setState(() {
+      _obscureText1 = !_obscureText1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,66 +47,50 @@ class SignUpScreen extends StatelessWidget {
             SizedBox(height: 150),
             Text('SIGN UP', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
             SizedBox(height: 30,),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal:20, vertical:5),
-              margin: EdgeInsets.symmetric(vertical:10),
-              width: size.width*0.8,
-              decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
-                borderRadius: BorderRadius.circular(29)
-              ),
-              child: TextField(
+            UiContainer(
+              TextField(
                 decoration: InputDecoration(
                   icon: Icon(Icons.person, color: Theme.of(context).primaryColor,),
                   hintText: 'Username'),
-              )
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal:20, vertical:5),
-              margin: EdgeInsets.symmetric(vertical:10),
-              width: size.width*0.8,
-              decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
-                borderRadius: BorderRadius.circular(29)
               ),
-              child: TextField(
-                obscureText: true,
+              Theme.of(context).accentColor,
+            ),
+            UiContainer(
+              TextField(
+                obscureText: _obscureText,
                 decoration: InputDecoration(
                   icon: Icon(Icons.lock, color: Theme.of(context).primaryColor,),
-                  suffixIcon: Icon(Icons.visibility, color: Theme.of(context).primaryColor,),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.visibility), 
+                    color: Theme.of(context).primaryColor,
+                    onPressed: _toggleSeen,
+                  ),
                   hintText: 'Password',
                 ),
-              )
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal:20, vertical:5),
-              margin: EdgeInsets.symmetric(vertical:10),
-              width: size.width*0.8,
-              decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
-                borderRadius: BorderRadius.circular(29)
               ),
-              child: TextField(
-                obscureText: true,
+              Theme.of(context).accentColor,
+            ),
+            UiContainer(
+              TextField(
+                obscureText: _obscureText1,
                 decoration: InputDecoration(
                   icon: Icon(Icons.lock, color: Theme.of(context).primaryColor,),
-                  suffixIcon: Icon(Icons.visibility, color: Theme.of(context).primaryColor,),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.visibility), 
+                    color: Theme.of(context).primaryColor,
+                    onPressed: _toggleSeen1,  
+                  ),
                   hintText: 'Confirm Password',
                 ),
-              )
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal:20, vertical:5),
-              margin: EdgeInsets.symmetric(vertical:10),
-              width: size.width*0.8,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(29)
               ),
-              child: FlatButton(
+              Theme.of(context).accentColor,
+            ),
+            UiContainer(
+              FlatButton(
                 onPressed: () {}, 
                 child: Text('Sign Up', style: TextStyle(color: Colors.white),)
               ),
+              Theme.of(context).primaryColor,
             ),
             SizedBox(height: 10,),
             Row(

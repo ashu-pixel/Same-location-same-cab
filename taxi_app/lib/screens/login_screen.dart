@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 
 import './signup_screen.dart';
+import '../widgets/ui_Container.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
 
   static const routeName = '/login';
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  
+  bool _obscureText = true;
+
+  void toggleSeen(){
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -27,52 +42,41 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: 150),
             Text('LOGIN', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
             SizedBox(height: 30,),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal:20, vertical:5),
-              margin: EdgeInsets.symmetric(vertical:10),
-              width: size.width*0.8,
-              decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
-                borderRadius: BorderRadius.circular(29)
-              ),
-              child: TextField(
+            UiContainer(
+              TextField(
                 controller: _usernameController,
                 decoration: InputDecoration(
                   icon: Icon(Icons.person, color: Theme.of(context).primaryColor,),
                   hintText: 'Username'
                 ),
-              )
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal:20, vertical:5),
-              margin: EdgeInsets.symmetric(vertical:10),
-              width: size.width*0.8,
-              decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
-                borderRadius: BorderRadius.circular(29)
               ),
-              child: TextField(
-                obscureText: true,
+              Theme.of(context).accentColor,
+            ),
+            UiContainer(
+              TextField(
+                obscureText: _obscureText,
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  icon: Icon(Icons.lock, color: Theme.of(context).primaryColor,),
-                  suffixIcon: Icon(Icons.visibility, color: Theme.of(context).primaryColor,),
+                  icon: Icon(
+                    Icons.lock, 
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.visibility), 
+                    color: Theme.of(context).primaryColor,
+                    onPressed: toggleSeen,  
+                  ),
                   hintText: 'Password',
                 ),
-              )
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal:20, vertical:5),
-              margin: EdgeInsets.symmetric(vertical:10),
-              width: size.width*0.8,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(29)
               ),
-              child: FlatButton(
+              Theme.of(context).accentColor,
+            ),
+            UiContainer(
+              FlatButton(
                 onPressed: () {}, 
                 child: Text('Login', style: TextStyle(color: Colors.white),)
               ),
+              Theme.of(context).primaryColor,
             ),
             SizedBox(height: 10,),
             Row(
