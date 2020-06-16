@@ -16,6 +16,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscureText = true;
+  final _formKey = GlobalKey<FormState>();
+  final _passwordfocus = FocusNode();
+
+  @override
+  void dispose() {
+    _passwordfocus.dispose();
+    super.dispose();
+  }
 
   void toggleSeen(){
     setState(() {
@@ -39,37 +47,52 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Image.asset("assets/images/main_top.png", width: size.width*0.3,),
           ),
           Column(children: <Widget>[
-            SizedBox(height: 150),
+            SizedBox(height: size.height*0.15),
             Text('LOGIN', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
-            SizedBox(height: 30,),
-            UiContainer(
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  icon: Icon(Icons.person, color: Theme.of(context).primaryColor,),
-                  hintText: 'Username'
-                ),
-              ),
-              Theme.of(context).accentColor,
-            ),
-            UiContainer(
-              TextField(
-                obscureText: _obscureText,
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.lock, 
-                    color: Theme.of(context).primaryColor,
+            SizedBox(height: size.height*0.03,),
+            Form(
+              key: _formKey,
+              child: Column(children: <Widget>[
+              UiContainer(
+                TextFormField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.person, color: Theme.of(context).primaryColor,),
+                    hintText: 'Username'
                   ),
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.visibility), 
-                    color: Theme.of(context).primaryColor,
-                    onPressed: toggleSeen,  
-                  ),
-                  hintText: 'Password',
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_passwordfocus);
+                  },
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Incorrect';
+                    }
+                    return null;
+                  },
                 ),
+                Theme.of(context).accentColor,
               ),
-              Theme.of(context).accentColor,
+              UiContainer(
+                TextFormField(
+                  obscureText: _obscureText,
+                  controller: _passwordController,
+                  focusNode: _passwordfocus,
+                  decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.lock, 
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.visibility), 
+                      color: Theme.of(context).primaryColor,
+                      onPressed: toggleSeen,  
+                    ),
+                    hintText: 'Password', 
+                  ),
+                ),
+                Theme.of(context).accentColor,
+              ),
+            ])
             ),
             UiContainer(
               FlatButton(

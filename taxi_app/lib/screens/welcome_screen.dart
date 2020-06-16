@@ -24,9 +24,9 @@ class WelcomeScreen extends StatelessWidget {
             ),
             Column(
               children: <Widget>[
-                SizedBox(height: 150,),
-                Text('Welcome', style: TextStyle(fontSize: 40),),
-                SizedBox(height: 50,),
+                SizedBox(height: size.height*0.15,),
+                Text('Welcome', style: TextStyle(fontSize: 40, fontStyle: FontStyle.italic),),
+                SizedBox(height: size.height*0.06,),
                 Container(
                   width: size.width*0.8,
                   child: ClipRRect(

@@ -22,3 +22,26 @@ class UiContainer extends StatelessWidget {
     );
   }
 }
+
+class SignupLogin extends StatelessWidget{
+  final Widget ch;
+  final Color color;
+
+  SignupLogin(this.ch, this.color);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal:20, vertical:5),
+      margin: const EdgeInsets.symmetric(vertical:10),
+      width: size.width*0.7,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(29)
+      ),
+      child: ch,
+    );
+  }
+}
