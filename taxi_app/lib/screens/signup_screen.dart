@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './login_screen.dart';
 import '../widgets/ui_Container.dart';
 import '../providers/user.dart';
+import '../providers/auth.dart';
+import '../widgets/http_exception.dart';
 
 class SignUpScreen extends StatefulWidget {
 
@@ -21,6 +24,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _pass1focus = FocusNode();
   final _pass2focus = FocusNode();
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _noController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _pass1Controller = TextEditingController();
+  final _pass2Controller = TextEditingController();
 
   void _toggleSeen(){
     setState(() {
@@ -54,17 +62,61 @@ class _SignUpScreenState extends State<SignUpScreen> {
       password: '',
     );
 
-    String _passcheck; 
+    void _showErrorDialog(String message) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('An Error Occurred!'),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    }
 
-    void submit(){
-      if(_passcheck != _newUser.password){
-        return;
-      }
+    Future<void> submit() async{
       final isValid = _formKey.currentState.validate();
       if (!isValid) {
+        print('Line 66');
         return;
       }
       _formKey.currentState.save();
+
+      _newUser=User(
+        name:_nameController.text,
+        contactNo: _noController.text,
+        username: _usernameController.text,
+        password: _pass1Controller.text,
+        id: DateTime.now().toString(),
+      );
+      try{
+        await Provider.of<Auth>(context, listen:false).signup(_newUser.username, _newUser.password);
+      }on HttpException catch (error) {
+      var errorMessage = 'Authentication failed';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'This email address is already in use.';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'This is not a valid email address';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'This password is too weak.';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Could not find a user with that email.';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invalid password.';
+      }
+      _showErrorDialog(errorMessage);
+    } catch (error) {
+      const errorMessage = 'Could not authenticate you. Please try again later.';
+      _showErrorDialog(errorMessage);
+    }
+      
+     
       print(_newUser.name);
       print(_newUser.contactNo);
       print(_newUser.username);
@@ -100,17 +152,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_phonefocus);
                       },
-                      onSaved: (value) {
-                        _newUser = User(
-                          name: value,
-                          contactNo: _newUser.contactNo,
-                          username: _newUser.username,
-                          password: _newUser.password,
-                          id: _newUser.id,
-                        );
-                      }
+                      controller: _nameController,
+                      validator: (value){
+                        if(value.isEmpty){
+                        
+                        }
+                      },
                     ),
                     Theme.of(context).accentColor,
+                    size.width*0.8,
                   ),
                   UiContainer(
                     TextFormField(
@@ -123,17 +173,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_usernamefocus);
                       },
-                      onSaved: (value) {
-                        _newUser = User(
-                          name: _newUser.name,
-                          contactNo: value,
-                          username: _newUser.username,
-                          password: _newUser.password,
-                          id: _newUser.id,
-                        );
-                      }
+                      controller: _noController,
                     ),
                     Theme.of(context).accentColor,
+                    size.width*0.8,
                   ),
                   UiContainer(
                     TextFormField(
@@ -145,17 +188,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_pass1focus);
                       },
-                      onSaved: (value) {
-                        _newUser = User(
-                          name: _newUser.name,
-                          contactNo: _newUser.contactNo,
-                          username: value,
-                          password: _newUser.password,
-                          id: _newUser.id,
-                        );
-                      }
+                      controller: _usernameController,
                     ),
                     Theme.of(context).accentColor,
+                    size.width*0.8,
                   ),
                   UiContainer(
                     TextFormField(
@@ -173,17 +209,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_pass2focus);
                       },
-                      onSaved: (value) {
-                        _newUser = User(
-                          name: _newUser.name,
-                          contactNo: _newUser.contactNo,
-                          username: _newUser.username,
-                          password: value,
-                          id: _newUser.id,
-                        );
-                      }
+                      controller: _pass1Controller,
                     ),
                     Theme.of(context).accentColor,
+                    size.width*0.8,
                   ),
                   UiContainer(
                     TextFormField(
@@ -198,21 +227,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         hintText: 'Confirm Password',
                       ),
                       focusNode: _pass2focus,
-                      onSaved: (value) {
-                        _passcheck = value;
+                      controller: _pass2Controller,
+                      validator: (value) {
+                        if(value != _pass2Controller.text){
+                          return 'Password doesnt match';
+                        }
                       },
-                      onFieldSubmitted: (_) => submit,
+                    //  onFieldSubmitted: (_) => submit,
                     ),
                     Theme.of(context).accentColor,
+                    size.width*0.8
                   ),
                 ])
               ),
-              SignupLogin(
+              UiContainer(
                 FlatButton(
                   onPressed: submit, 
                   child: Text('Sign Up', style: TextStyle(color: Colors.white),)
                 ),
                 Theme.of(context).primaryColor,
+                size.width*0.4,
               ),
               SizedBox(height: 10,),
               Row(

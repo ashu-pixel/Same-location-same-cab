@@ -7,6 +7,7 @@ class User with ChangeNotifier{
   final String contactNo;
   final String username;
   final String password;
+  //image
 
   User({
     @required this.id,

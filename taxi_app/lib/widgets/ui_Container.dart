@@ -4,16 +4,17 @@ class UiContainer extends StatelessWidget {
 
   final Widget ch;
   final Color color;
-  UiContainer(this.ch, this.color);
+  final double width;
+  UiContainer(this.ch, this.color, this.width);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    //Size size = MediaQuery.of(context).size;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal:20, vertical:5),
       margin: const EdgeInsets.symmetric(vertical:10),
-      width: size.width*0.8,
+      width: width,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(29)
@@ -23,25 +24,3 @@ class UiContainer extends StatelessWidget {
   }
 }
 
-class SignupLogin extends StatelessWidget{
-  final Widget ch;
-  final Color color;
-
-  SignupLogin(this.ch, this.color);
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal:20, vertical:5),
-      margin: const EdgeInsets.symmetric(vertical:10),
-      width: size.width*0.7,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(29)
-      ),
-      child: ch,
-    );
-  }
-}

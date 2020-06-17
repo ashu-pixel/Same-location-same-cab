@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './signup_screen.dart';
 import '../widgets/ui_Container.dart';
+import '../providers/auth.dart';
+import '../widgets/http_exception.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -29,6 +32,56 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  void _showErrorDialog(String message) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('An Error Occurred!'),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    }
+
+  Future<void> authorize() async{
+    final isValid = _formKey.currentState.validate();
+    if (!isValid) {
+      print('Line 66');
+      return;
+    }
+    _formKey.currentState.save();
+    try{
+      await Provider.of<Auth>(context, listen:false).login(_usernameController.text, _passwordController.text);
+    }on HttpException catch (error) {
+      var errorMessage = 'Authentication failed';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'This email address is already in use.';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'This is not a valid email address';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'This password is too weak.';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Could not find a user with that email.';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invalid password.';
+      }
+      _showErrorDialog(errorMessage);
+    } catch (error) {
+      const errorMessage = 'Could not authenticate you. Please try again later.';
+      _showErrorDialog(errorMessage);
+    }
+    
+    print(_usernameController.text);
+    print(_passwordController.text);
   }
 
   @override
@@ -71,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 Theme.of(context).accentColor,
+                size.width*0.8,
               ),
               UiContainer(
                 TextFormField(
@@ -91,15 +145,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Theme.of(context).accentColor,
+                size.width*0.8
               ),
             ])
             ),
             UiContainer(
               FlatButton(
-                onPressed: () {}, 
+                onPressed: authorize, 
                 child: Text('Login', style: TextStyle(color: Colors.white),)
               ),
               Theme.of(context).primaryColor,
+              size.width*0.4
             ),
             SizedBox(height: 10,),
             Row(
