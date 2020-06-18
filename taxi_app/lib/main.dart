@@ -6,6 +6,8 @@ import './screens/welcome_screen.dart';
 import './screens/signup_screen.dart';
 import './providers/auth.dart';
 import './screens/main_screen.dart';
+import './screens/splash_screen.dart';
+import './providers/users.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,12 +15,28 @@ void main() {
 
 class MyApp extends StatelessWidget {
 
+  final usertoken = null;
+  final userId = null;
+  final users = null;
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
           value: Auth()
+        ),
+        ChangeNotifierProxyProvider<Auth,Users>(
+          create: (_) => Users(
+            usertoken, 
+            userId, 
+            users
+          ),
+          update: (_, auth, prevlist) => Users(
+            prevlist == null ? [] : prevlist.users,
+            auth.token, 
+            auth.userId,
+          ),
         ),
       ],
       child: Consumer<Auth>(builder: (ctx, auth, _) =>
@@ -29,7 +47,12 @@ class MyApp extends StatelessWidget {
           accentColor: Color(0xFFF1E6FF),
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: auth.isAuth ? MainScreen() : WelcomeScreen(),
+        home: auth.isAuth 
+          ? MainScreen() 
+          : FutureBuilder(future: auth.tryAutoLogin(), builder: (ctx, authResultSnapshot) => 
+            authResultSnapshot.connectionState == ConnectionState.waiting 
+            ? SplashScreen() 
+            : WelcomeScreen(),),
         routes: {
           WelcomeScreen.routeName : (ctx) => WelcomeScreen(),
           LoginScreen.routeName : (ctx) => LoginScreen(),

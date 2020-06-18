@@ -21,8 +21,7 @@ class Users with ChangeNotifier{
   }
 
   Future<void> addUser(User user) async {
-    final url =
-        'https://flutter-update.firebaseio.com/products.json?auth=$authToken';
+    final url = 'https://samelocationsametaxi.firebaseio.com/users.json?auth=$authToken';
     try {
       final response = await http.post(
         url,
