@@ -6,6 +6,7 @@ import '../widgets/ui_Container.dart';
 import '../providers/user.dart';
 import '../providers/auth.dart';
 import '../widgets/http_exception.dart';
+import '../providers/users.dart';
 
 class SignUpScreen extends StatefulWidget {
 
@@ -115,8 +116,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       const errorMessage = 'Could not authenticate you. Please try again later.';
       _showErrorDialog(errorMessage);
     }
-      
-     
+      print('signup verification done');
+      await Provider.of<Users>(context, listen: false).addUser(_newUser);
+      print('User added');
       print(_newUser.name);
       print(_newUser.contactNo);
       print(_newUser.username);
@@ -155,8 +157,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: _nameController,
                       validator: (value){
                         if(value.isEmpty){
-                        
+                          return 'Enter Name';
                         }
+                        return null;
                       },
                     ),
                     Theme.of(context).accentColor,
@@ -232,8 +235,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if(value != _pass2Controller.text){
                           return 'Password doesnt match';
                         }
+                        return null;
                       },
-                    //  onFieldSubmitted: (_) => submit,
                     ),
                     Theme.of(context).accentColor,
                     size.width*0.8

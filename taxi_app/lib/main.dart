@@ -6,8 +6,10 @@ import './screens/welcome_screen.dart';
 import './screens/signup_screen.dart';
 import './providers/auth.dart';
 import './screens/main_screen.dart';
-import './screens/splash_screen.dart';
 import './providers/users.dart';
+import './widgets/profile_firebase.dart';
+import './screens/profile.dart';
+import './screens/bill_splitter.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,9 +17,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
 
-  final usertoken = null;
+  final token = null;
   final userId = null;
-  final users = null;
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +27,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth()
         ),
-        ChangeNotifierProxyProvider<Auth,Users>(
-          create: (_) => Users(
-            usertoken, 
+        ChangeNotifierProvider.value(
+          value: Users()
+        ),
+        ChangeNotifierProxyProvider<Auth,Profile>(
+          create: (_) => Profile(
+            token, 
             userId, 
-            users
           ),
-          update: (_, auth, prevlist) => Users(
-            prevlist == null ? [] : prevlist.users,
+          update: (_, auth, users) => Profile(
             auth.token, 
             auth.userId,
           ),
@@ -47,21 +49,17 @@ class MyApp extends StatelessWidget {
           accentColor: Color(0xFFF1E6FF),
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: auth.isAuth 
-          ? MainScreen() 
-          : FutureBuilder(future: auth.tryAutoLogin(), builder: (ctx, authResultSnapshot) => 
-            authResultSnapshot.connectionState == ConnectionState.waiting 
-            ? SplashScreen() 
-            : WelcomeScreen(),),
+        home: WelcomeScreen(),
         routes: {
           WelcomeScreen.routeName : (ctx) => WelcomeScreen(),
           LoginScreen.routeName : (ctx) => LoginScreen(),
           SignUpScreen.routeName : (ctx) => SignUpScreen(),
           MainScreen.routeName : (ctx) => MainScreen(),
+          ProfileScreen.routeName : (ctx) => ProfileScreen(),
+          BillSPlitterScreen.routeName : (ctx) => BillSPlitterScreen()
         },
       )
-      ,)
-      
+    )
     );
   }
 }

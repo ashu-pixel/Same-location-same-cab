@@ -7,21 +7,12 @@ import './user.dart';
 class Users with ChangeNotifier{
   List<User> _users = [];
 
-  final String authToken;
-  final String userId;
-
-  Users(this._users, this.authToken, this.userId);
-
   List<User> get users{
     return [..._users];
   }
 
-  User findById(String id){
-    return _users.firstWhere((user) => user.id == id);
-  }
-
   Future<void> addUser(User user) async {
-    final url = 'https://samelocationsametaxi.firebaseio.com/users.json?auth=$authToken';
+    final url = 'https://samelocationsametaxi.firebaseio.com/users.json';
     try {
       final response = await http.post(
         url,
@@ -30,7 +21,6 @@ class Users with ChangeNotifier{
           'contactNo': user.contactNo,
           'username': user.username,
           'password': user.password,
-          'creatorId': userId,
         }),
       );
       final newUser = User(
@@ -38,8 +28,9 @@ class Users with ChangeNotifier{
         contactNo: user.contactNo,
         username: user.username,
         password: user.password,
-        id: json.decode(response.body)['name'],
+        id: DateTime.now().toString(),
       );
+      print(json.decode(response.body)['name']);
       _users.add(newUser);
       notifyListeners();
     } 

@@ -34,7 +34,7 @@ class WelcomeScreen extends StatelessWidget {
                     child: FlatButton(
                       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(LoginScreen.routeName);
+                        Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
                       }, 
                       color: Theme.of(context).primaryColor,
                       child: Text('LOGIN' , style: TextStyle(color: Colors.white),),
@@ -49,7 +49,7 @@ class WelcomeScreen extends StatelessWidget {
                     child: FlatButton(
                       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                        Navigator.of(context).pushReplacementNamed(SignUpScreen.routeName);
                       }, 
                       color: Theme.of(context).accentColor,
                       child: Text('SIGNUP' , style: TextStyle(color: Colors.black),),

@@ -5,6 +5,7 @@ import './signup_screen.dart';
 import '../widgets/ui_Container.dart';
 import '../providers/auth.dart';
 import '../widgets/http_exception.dart';
+import './main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -34,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  void _showErrorDialog(String message) {
+  void showErrorDialog(String message) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -74,12 +75,12 @@ class _LoginScreenState extends State<LoginScreen> {
       } else if (error.toString().contains('INVALID_PASSWORD')) {
         errorMessage = 'Invalid password.';
       }
-      _showErrorDialog(errorMessage);
+      showErrorDialog(errorMessage);
     } catch (error) {
       const errorMessage = 'Could not authenticate you. Please try again later.';
-      _showErrorDialog(errorMessage);
+      showErrorDialog(errorMessage);
     }
-    
+    Navigator.of(context).pushReplacementNamed(MainScreen.routeName);
     print(_usernameController.text);
     print(_passwordController.text);
   }
