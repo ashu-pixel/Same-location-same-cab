@@ -10,6 +10,7 @@ import './providers/users.dart';
 import './widgets/profile_firebase.dart';
 import './screens/profile.dart';
 import './screens/bill_splitter.dart';
+import './screens/main_screen2.dart';
 
 void main() {
   runApp(MyApp());
@@ -56,7 +57,8 @@ class MyApp extends StatelessWidget {
           SignUpScreen.routeName : (ctx) => SignUpScreen(),
           MainScreen.routeName : (ctx) => MainScreen(),
           ProfileScreen.routeName : (ctx) => ProfileScreen(),
-          BillSPlitterScreen.routeName : (ctx) => BillSPlitterScreen()
+          BillSPlitterScreen.routeName : (ctx) => BillSPlitterScreen(),
+          MainScreen2.routeName : (ctx) => MainScreen2()
         },
       )
     )
