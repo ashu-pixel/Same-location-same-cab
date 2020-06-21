@@ -11,11 +11,26 @@ class LocationInput extends StatefulWidget {
 
   @override
   _LocationInputState createState() => _LocationInputState();
+
+  // double latitude;
+  // double longitude;
+
+  // double getStartLatitude(){
+  //   return latitude;
+  // }
+
+  // double getStartLongitude(){
+  //   return longitude;
+  // }
+  
 }
 
 class _LocationInputState extends State<LocationInput> {
 
   String _previewImageUrl;
+  double latitude;
+  double longitude;
+
 
   void _showPreview(double lat, double lng) {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
@@ -32,6 +47,8 @@ class _LocationInputState extends State<LocationInput> {
       final locData = await Location().getLocation();
       _showPreview(locData.latitude, locData.longitude);
       widget.onSelectPlace(locData.latitude, locData.longitude);
+      latitude = locData.latitude;
+      longitude = locData.longitude;
     } catch (error) {
       return;
     }
@@ -49,6 +66,8 @@ class _LocationInputState extends State<LocationInput> {
     }
     _showPreview(selectedLocation.latitude, selectedLocation.longitude);
     widget.onSelectPlace(selectedLocation.latitude, selectedLocation.longitude);
+    latitude = selectedLocation.latitude;
+    longitude = selectedLocation.longitude;
   }
 
   @override
@@ -111,6 +130,16 @@ class LocationInputEnd extends StatefulWidget {
 class _LocationInputEndState extends State<LocationInputEnd> {
 
   String _previewImageUrl;
+  double latitude;
+  double longitude;
+
+  double getEndLatitude(){
+    return latitude;
+  }
+
+  double getEndLongitude(){
+    return longitude;
+  }
 
   void _showPreview(double lat, double lng) {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
@@ -134,6 +163,8 @@ class _LocationInputEndState extends State<LocationInputEnd> {
     }
     _showPreview(selectedLocation.latitude, selectedLocation.longitude);
     widget.onSelectPlace(selectedLocation.latitude, selectedLocation.longitude);
+    latitude = selectedLocation.latitude;
+    longitude = selectedLocation.longitude;
   }
 
   @override

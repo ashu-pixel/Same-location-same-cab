@@ -14,11 +14,17 @@ class MainScreen extends StatelessWidget {
 
     final _locationController = TextEditingController();
     Size size = MediaQuery.of(context).size;
-    PlaceLocation _pickedLocation;
+    PlaceLocation _pickedStartLocation;
+    PlaceLocation _pickedEndLocation;
 
-    void _selectPlace(double lat, double lng) {
-      _pickedLocation = PlaceLocation(latitude: lat, longitude: lng, address: " ");
-      print(_pickedLocation);
+    void _selectStartPlace(double lat, double lng) {
+      _pickedStartLocation = PlaceLocation(latitude: lat, longitude: lng, address: " ");
+      print(_pickedStartLocation);
+    }
+
+    void _selectEndPlace(double lat, double lng) {
+      _pickedEndLocation = PlaceLocation(latitude: lat, longitude: lng, address: " ");
+      print(_pickedEndLocation);
     }
 
     return Scaffold(
@@ -45,7 +51,7 @@ class MainScreen extends StatelessWidget {
               size.width*0.9
             ),
           ),
-          LocationInput(_selectPlace),
+          LocationInput(_selectStartPlace),
           Container(
             margin: EdgeInsets.all(5),
             alignment: Alignment(0.0,0.0),
@@ -63,7 +69,7 @@ class MainScreen extends StatelessWidget {
               size.width*0.9
             ),
           ),
-          LocationInputEnd(_selectPlace),
+          LocationInputEnd(_selectEndPlace),
           SizedBox(height: size.height*0.01,),
           Container(
             alignment: Alignment.bottomRight,
@@ -78,7 +84,20 @@ class MainScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.white)
                 ),
                 onPressed: (){
-                  Navigator.of(context).pushNamed(MainScreen2.routeName);
+                  //Navigator.of(context).pushNamed(MainScreen2.routeName,arguments: );
+                  var route = new MaterialPageRoute(
+                    builder: (BuildContext ctx) => new MainScreen2(
+                      startLat: _pickedStartLocation.latitude,
+                      startLong: _pickedStartLocation.longitude,
+                      endLat: _pickedEndLocation.latitude,
+                      endLong: _pickedEndLocation.longitude,
+                    ),
+                  );
+                  Navigator.of(context).push(route);
+                  print(_pickedStartLocation.latitude);
+                  print(_pickedStartLocation.longitude);
+                  print(_pickedEndLocation.latitude);
+                  print(_pickedEndLocation.longitude);
                 },
               ),
               Theme.of(context).primaryColor,

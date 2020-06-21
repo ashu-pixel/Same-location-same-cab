@@ -10,7 +10,7 @@ import './providers/users.dart';
 import './widgets/profile_firebase.dart';
 import './screens/profile.dart';
 import './screens/bill_splitter.dart';
-import './screens/main_screen2.dart';
+import './providers/request.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: Users()
+        ),
+        ChangeNotifierProvider.value(
+          value: Request()
         ),
         ChangeNotifierProxyProvider<Auth,Profile>(
           create: (_) => Profile(
@@ -58,7 +61,7 @@ class MyApp extends StatelessWidget {
           MainScreen.routeName : (ctx) => MainScreen(),
           ProfileScreen.routeName : (ctx) => ProfileScreen(),
           BillSPlitterScreen.routeName : (ctx) => BillSPlitterScreen(),
-          MainScreen2.routeName : (ctx) => MainScreen2()
+          //MainScreen2.routeName : (ctx) => MainScreen2()
         },
       )
     )

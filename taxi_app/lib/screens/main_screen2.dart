@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:taxi_app/providers/request.dart';
 import '../widgets/ui_Container.dart';
 
 class MainScreen2 extends StatefulWidget {
+
+  final double startLat;
+  final double startLong;
+  final double endLat;
+  final double endLong;
+
+  MainScreen2({Key key, this.startLat, this.startLong, this.endLat, this.endLong}) : super(key:key);
 
   static const routeName = '/mainscreen2';
 
@@ -131,6 +140,16 @@ class _MainScreen2State extends State<MainScreen2> {
             Theme.of(context).accentColor,
             size.width*0.8
           ),
+        ),
+        FlatButton(
+          child: Text('Search for a Co-Passenger'),
+          onPressed: (){
+            double stlat = MainScreen2().startLat;
+            double stlon = MainScreen2().startLong;
+            double endlat = MainScreen2().endLat;
+            double endlong = MainScreen2().endLong;
+            Provider.of<Request>(context).postRequest(stlat,stlon,endlat,endlong,selectedtype,selectedResponse,DateTime.now(),);
+          },
         ),
       ],)
     );
