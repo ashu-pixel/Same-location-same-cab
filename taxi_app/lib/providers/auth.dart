@@ -69,4 +69,5 @@ class Auth with ChangeNotifier{
     _authenticate(username, password, 'signInWithPassword');
     print('loggedIn');   
   }
+
 }

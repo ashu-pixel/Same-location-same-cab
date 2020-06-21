@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-const GOOGLE_API_KEY = 'AIzaSyCE4eIGuIXww0YRBda6xsaN2fxzSiKY_cA';
+const GOOGLE_API_KEY = 'AIzaSyBABWJyXQo4ryHl14UEPHIiO2Huqvs8emY';
 
 class LocationHelper {
   static String generateLocationPreviewImage({double latitude, double longitude,}) {
+    print(latitude);
+    print(longitude);
     return 'https://maps.googleapis.com/maps/api/staticmap?center=&$latitude,$longitude&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$latitude,$longitude&key=$GOOGLE_API_KEY';
   }
 
