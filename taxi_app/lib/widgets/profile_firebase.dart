@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import '../providers/auth.dart';
 
 class Profile with ChangeNotifier{
 
-  final userId;
-  final authToken;
+  Future<void> fetchProfile(BuildContext context) async{
 
-  Profile(this.userId,this.authToken);
+    final String userId = await Provider.of<Auth>(context, listen: false).getCurrentUserId();
 
-  Future<void> fetchProfile() async{
     print('in Function');
     print(userId);
     final url = 'https://samelocationsametaxi.firebaseio.com/users/$userId.json';
@@ -18,9 +18,9 @@ class Profile with ChangeNotifier{
     print('url fetched');
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData == null) {
-      print('null');
+      print('in null');
       return;
     }
-    print(extractedData);
+    print(extractedData['name']);
   }
 }

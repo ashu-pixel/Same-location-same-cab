@@ -34,16 +34,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Request()
         ),
-        ChangeNotifierProxyProvider<Auth,Profile>(
-          create: (_) => Profile(
-            token, 
-            userId, 
-          ),
-          update: (_, auth, users) => Profile(
-            auth.token, 
-            auth.userId,
-          ),
-        ),
+        ChangeNotifierProvider.value(
+          value: Profile()
+        )
       ],
       child: Consumer<Auth>(builder: (ctx, auth, _) =>
       MaterialApp(

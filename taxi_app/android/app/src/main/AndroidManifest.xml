@@ -25,7 +25,7 @@
               android:resource="@style/NormalTheme"
               />
             <meta-data android:name="com.google.android.geo.API_KEY"
-              android:value="AIzaSyBABWJyXQo4ryHl14UEPHIiO2Huqvs8emY"
+              android:value="AIzaSyCv28h21FDtPg6PLCF9s_GpFjxyuChQTt8"
               />
             <!-- Displays an Android View that continues showing the launch screen
                  Drawable until Flutter paints its first frame, then this splash

@@ -35,23 +35,23 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  void showErrorDialog(String message) {
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('An Error Occurred!'),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Okay'),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            )
-          ],
-        ),
-      );
-    }
+  dynamic showErrorDialog(String message) {
+    return showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
 
   Future<void> authorize() async{
     final isValid = _formKey.currentState.validate();
@@ -66,19 +66,23 @@ class _LoginScreenState extends State<LoginScreen> {
       var errorMessage = 'Authentication failed';
       if (error.toString().contains('EMAIL_EXISTS')) {
         errorMessage = 'This email address is already in use.';
+        return showErrorDialog(errorMessage);
       } else if (error.toString().contains('INVALID_EMAIL')) {
         errorMessage = 'This is not a valid email address';
+        return showErrorDialog(errorMessage);
       } else if (error.toString().contains('WEAK_PASSWORD')) {
         errorMessage = 'This password is too weak.';
+        return showErrorDialog(errorMessage);
       } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
         errorMessage = 'Could not find a user with that email.';
+        return showErrorDialog(errorMessage);
       } else if (error.toString().contains('INVALID_PASSWORD')) {
         errorMessage = 'Invalid password.';
+        return showErrorDialog(errorMessage);
       }
-      showErrorDialog(errorMessage);
     } catch (error) {
       const errorMessage = 'Could not authenticate you. Please try again later.';
-      showErrorDialog(errorMessage);
+      return showErrorDialog(errorMessage);
     }
     Navigator.of(context).pushReplacementNamed(MainScreen.routeName);
     print(_usernameController.text);
@@ -119,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   validator: (value) {
                     if (value.isEmpty) {
-                      return 'Incorrect';
+                      return 'Username should not be empty';
                     }
                     return null;
                   },
@@ -142,8 +146,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Theme.of(context).primaryColor,
                       onPressed: toggleSeen,  
                     ),
-                    hintText: 'Password', 
+                    hintText: 'Password',
                   ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Password should not be empty';
+                    }
+                    return null;
+                  },
                 ),
                 Theme.of(context).accentColor,
                 size.width*0.8

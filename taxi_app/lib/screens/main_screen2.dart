@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taxi_app/providers/request.dart';
+import '../providers/auth.dart';
 import '../widgets/ui_Container.dart';
 
 class MainScreen2 extends StatefulWidget {
@@ -148,7 +149,8 @@ class _MainScreen2State extends State<MainScreen2> {
             double stlon = MainScreen2().startLong;
             double endlat = MainScreen2().endLat;
             double endlong = MainScreen2().endLong;
-            Provider.of<Request>(context).postRequest(stlat,stlon,endlat,endlong,selectedtype,selectedResponse,DateTime.now(),);
+            String id = Provider.of<Auth>(context, listen: false).userId;
+            Provider.of<Request>(context, listen: false).postRequest(stlat,stlon,endlat,endlong,selectedtype,selectedResponse,DateTime.now(),id);
           },
         ),
       ],)

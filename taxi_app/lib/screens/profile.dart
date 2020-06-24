@@ -14,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
       body: Column(children: <Widget>[
         FlatButton(
           child: Text('Click'),
-          onPressed: Provider.of<Profile>(context).fetchProfile,
+          onPressed: () => Provider.of<Profile>(context, listen: false).fetchProfile(context),
         ),
       ],),
       drawer: AppDrawer(),

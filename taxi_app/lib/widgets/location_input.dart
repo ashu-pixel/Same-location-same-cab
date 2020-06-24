@@ -11,18 +11,6 @@ class LocationInput extends StatefulWidget {
 
   @override
   _LocationInputState createState() => _LocationInputState();
-
-  // double latitude;
-  // double longitude;
-
-  // double getStartLatitude(){
-  //   return latitude;
-  // }
-
-  // double getStartLongitude(){
-  //   return longitude;
-  // }
-  
 }
 
 class _LocationInputState extends State<LocationInput> {
@@ -30,7 +18,6 @@ class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
   double latitude;
   double longitude;
-
 
   void _showPreview(double lat, double lng) {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(

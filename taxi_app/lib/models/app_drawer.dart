@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/screens/bill_splitter.dart';
+import 'package:provider/provider.dart';
+import 'package:taxi_app/screens/welcome_screen.dart';
 import '../screens/main_screen.dart';
 import '../screens/profile.dart';
+import '../providers/auth.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -46,6 +49,15 @@ class AppDrawer extends StatelessWidget {
           },
         ),
         Divider(),
+        ListTile(
+          leading: Icon(Icons.power_settings_new),
+          title: Text('Logout'),
+          onTap: () {
+            Provider.of<Auth>(context, listen: false).logout();
+            Navigator.of(context).pop();
+            Navigator.of(context).pushNamed(WelcomeScreen.routeName);
+          },
+        ),
       ],),
     );
   }
