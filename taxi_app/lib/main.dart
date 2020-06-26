@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import './screens/login_screen.dart';
+import './screens/loginScreen.dart';
 import './screens/welcome_screen.dart';
 import './screens/signup_screen.dart';
 import './providers/auth.dart';
@@ -55,6 +54,7 @@ class MyApp extends StatelessWidget {
           ProfileScreen.routeName : (ctx) => ProfileScreen(),
           BillSPlitterScreen.routeName : (ctx) => BillSPlitterScreen(),
           //MainScreen2.routeName : (ctx) => MainScreen2()
+          
         },
       )
     )

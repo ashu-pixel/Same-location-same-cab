@@ -33,13 +33,14 @@ class Auth with ChangeNotifier{
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Future<String> getCurrentUserId() async {
     final FirebaseUser user = await _auth.currentUser();
+    print(user);
     final uid = user.uid.toString();
     return uid;
   }
 
   Future<void> _authenticate(String username, String password, String urlSegment) async {
     final url =
-      'https://identitytoolkit.googleapis.com/v1/accounts$urlSegment?key=AIzaSyCE4eIGuIXww0YRBda6xsaN2fxzSiKY_cA';
+      'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyCE4eIGuIXww0YRBda6xsaN2fxzSiKY_cA';
     try {
       final response = await http.post(
         url,

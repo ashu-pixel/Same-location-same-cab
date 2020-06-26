@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import './login_screen.dart';
+import 'loginScreen.dart';
+//import './login_screen.dart';
 import '../widgets/ui_Container.dart';
 import '../providers/user.dart';
 import '../providers/auth.dart';
@@ -96,9 +96,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         password: _pass1Controller.text,
         id: DateTime.now().toString(),
       );
+      print(_newUser.username+" hiiiiiiii"+_newUser.password);
       try{
         await Provider.of<Auth>(context, listen:false).signup(_newUser.username, _newUser.password);
       }on HttpException catch (error) {
+        print("==================");
+    print(error);
       var errorMessage = 'Authentication failed';
       if (error.toString().contains('EMAIL_EXISTS')) {
         errorMessage = 'This email address is already in use.';

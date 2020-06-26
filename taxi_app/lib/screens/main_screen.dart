@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
 import '../widgets/ui_Container.dart';
 import '../models/app_drawer.dart';
 import '../widgets/location_input.dart';
 import '../models/place_location.dart';
 import './main_screen2.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget{
 
   static const routeName = '/mainScreen';
 
   @override
+  _MainScreenState createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+
+  final _locationStartController = TextEditingController();
+  final _locationEndController = TextEditingController();
+  PlaceLocation _pickedStartLocation;
+  PlaceLocation _pickedEndLocation;
+
+  Future<Address> convertToAddress(double latitude, double longitude)async{
+      final coordinates = new Coordinates(latitude, longitude);
+      var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+      var first = addresses.first;
+      return first;
+  }
+
+  @override
   Widget build(BuildContext context) {
 
-    final _locationController = TextEditingController();
     Size size = MediaQuery.of(context).size;
-    PlaceLocation _pickedStartLocation;
-    PlaceLocation _pickedEndLocation;
 
     void _selectStartPlace(double lat, double lng) {
       _pickedStartLocation = PlaceLocation(latitude: lat, longitude: lng, address: " ");
@@ -40,11 +56,12 @@ class MainScreen extends StatelessWidget {
             width: size.width*0.9,
             child: UiContainer(
               TextField(
-                controller: _locationController,
+                controller: _locationStartController,
                 decoration: InputDecoration(
-                  hintText: 'Select A Start Location',
+                  hintText: 'Select a Start Location',
                   icon: Icon(Icons.search),
-                  focusColor: Theme.of(context).primaryColor
+                  focusColor: Theme.of(context).primaryColor,
+                  labelText: _pickedStartLocation!=null ? convertToAddress(_pickedStartLocation.latitude, _pickedStartLocation.longitude).toString() : null,
                 ),
               ),
               Theme.of(context).accentColor,
@@ -58,11 +75,12 @@ class MainScreen extends StatelessWidget {
             width: size.width*0.9,
             child: UiContainer(
               TextField(
-                controller: _locationController,
+                controller: _locationEndController,
                 decoration: InputDecoration(
                   hintText: 'Select An End Location',
                   icon: Icon(Icons.search),
-                  focusColor: Theme.of(context).primaryColor
+                  focusColor: Theme.of(context).primaryColor,
+                  ///labelText: convertToAddress(_pickedEndLocation.latitude, _pickedEndLocation.longitude).toString(),
                 ),
               ),
               Theme.of(context).accentColor,
@@ -84,7 +102,6 @@ class MainScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.white)
                 ),
                 onPressed: (){
-                  //Navigator.of(context).pushNamed(MainScreen2.routeName,arguments: );
                   var route = new MaterialPageRoute(
                     builder: (BuildContext ctx) => new MainScreen2(
                       startLat: _pickedStartLocation.latitude,
@@ -98,6 +115,10 @@ class MainScreen extends StatelessWidget {
                   print(_pickedStartLocation.longitude);
                   print(_pickedEndLocation.latitude);
                   print(_pickedEndLocation.longitude);
+                  var startaddress = convertToAddress(_pickedStartLocation.latitude, _pickedStartLocation.longitude);
+                  print(startaddress);
+                  var endaddress = convertToAddress(_pickedEndLocation.latitude, _pickedEndLocation.longitude);
+                  print(endaddress);
                 },
               ),
               Theme.of(context).primaryColor,

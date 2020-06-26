@@ -14,10 +14,12 @@ class BillSPlitterScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     dynamic calculate(){
-      final totalAmount = _amountController.text as double;
-      final people = _noController.text as double;
+      final totalAmount = _amountController.text;
+      final people = _noController.text;
 
-      amount = totalAmount/people;
+      amount = double.parse(totalAmount)/double.parse(people);
+      print(totalAmount);
+      print(people);
       return amount;
     }
 
@@ -56,6 +58,20 @@ class BillSPlitterScreen extends StatelessWidget {
                 onPressed: () {
                   String total = calculate().toString();
                   print(total);
+                  showModalBottomSheet(context: context, builder: (ctx){
+                    return Column(children: <Widget>[
+                      UiContainer(
+                        Text('Amount to be paid by each person :'),
+                        Theme.of(context).accentColor,
+                        size.width*0.8
+                      ),
+                      UiContainer(
+                        Text(total),
+                        Theme.of(context).primaryColor,
+                        size.width*0.5
+                      )
+                    ],);
+                  });
                 },
               ),
               Theme.of(context).primaryColor,

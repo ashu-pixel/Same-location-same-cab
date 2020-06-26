@@ -1,10 +1,8 @@
-/*import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import './signup_screen.dart';
 import '../widgets/ui_Container.dart';
-import '../providers/auth.dart';
-import '../widgets/http_exception.dart';
 import './main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -60,30 +58,41 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
     _formKey.currentState.save();
-    try{
-      await Provider.of<Auth>(context, listen:false).login(_usernameController.text, _passwordController.text);
-    }on HttpException catch (error) {
-      print(error);
-      var errorMessage = 'Authentication failed';
-      if (error.toString().contains('INVALID_EMAIL')) {
-        errorMessage = 'This is not a valid email address';
-        //return showErrorDialog(errorMessage);
-      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
-        errorMessage = 'Could not find a user with that email.';
-        //return showErrorDialog(errorMessage);
-      } else if (error.toString().contains('INVALID_PASSWORD')) {
-        errorMessage = 'Invalid password.';
-        //return showErrorDialog(errorMessage);
-      }
-      showErrorDialog(errorMessage);
-    } catch (error) {
-      print(error);
-      const errorMessage = 'Could not authenticate you. Please try again later.';
-      //return showErrorDialog(errorMessage);
-    }
-    //Navigator.of(context).pushReplacementNamed(MainScreen.routeName);
+    print("hi====================================");
     print(_usernameController.text);
     print(_passwordController.text);
+    
+     final url =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCE4eIGuIXww0YRBda6xsaN2fxzSiKY_cA';
+  
+      final response = await http.post(
+        url,
+        body: json.encode(
+          {
+            'email': _usernameController.text,
+            'password': _passwordController.text,
+            'returnSecureToken': true,
+          },
+        ),
+      );
+      final responseData = json.decode(response.body);
+      print("===================================");
+      print(responseData);
+      if(responseData['error']!=null){
+        var error = responseData['error']['message'];
+        var message = 'Auth'; 
+        if(error.contains('EMAIL_NOT_FOUND')){
+          message = 'The entered email is not registered';
+        }else if(error.contains('INVALID_EMAIL')){
+          message = 'The entered Email is not valid. Please enter a valid email';
+        }else if(error.contains('INVALID_PASSWORD')){
+          message = 'The password you entered is incorrect';
+        }
+        print("hhhh============================================");    
+        return showErrorDialog(message);
+      }else{
+        Navigator.of(context).pushReplacementNamed(MainScreen.routeName);
+      }
   }
 
   @override
@@ -199,4 +208,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-}*/
+}
