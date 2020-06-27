@@ -1,19 +1,22 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:taxi_app/providers/user.dart';
 
 class Request with ChangeNotifier{
 
   Future<void> searchPassenger(BuildContext ctx, double startLocationLat, double startLocationLong, double endLocationLat, double endLocationLong, String mode, String alreadyinVehicle, DateTime time)async{
     final url = 'https://samelocationsametaxi.firebaseio.com/requests.json';
+    print('in search fxn');
     final response = await http.get(url);
     final extractedData = json.decode(response.body) as Map<String,dynamic>;
     if(extractedData == null){
-      print('null');
+      print('in null');
       return ;
     }
+    print('============================================');
     print(extractedData);
-    extractedData.forEach((userID, userData) async{
+    extractedData.forEach((userID, userData){
       double upperstartLocLat = startLocationLat + 0.5;
       double lowerstartLocLat = startLocationLat - 0.5;
       double upperstartLocLong = startLocationLong + 0.5;
@@ -32,38 +35,47 @@ class Request with ChangeNotifier{
         mode == userData['mode'] && alreadyinVehicle == 'No' && 
         lowertimeLimit.isBefore(DateTime.parse(userData['time'])) && uppertimeLimit.isAfter(DateTime.parse(userData[time]))
       ){
-        final userUrl = 'https://samelocationsametaxi.firebaseio.com/users/$userID.json';
-        final urlResponse = await http.get(userUrl);
-        final matchedUser = json.decode(urlResponse.body) as Map<String,dynamic>;
-        if(extractedData == null){
-          print('null');
-          return ;
-        }
-        print(matchedUser['name']);
-        print(matchedUser['contactNo']);
-        showModalBottomSheet(
-          context: ctx, 
-          builder: (ctx) {
-            return Column(children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text(matchedUser['name']),
-                subtitle: Text('Name'),
-              ),
-              ListTile(
-                leading: Icon(Icons.phone),
-                title: Text(matchedUser['contactNo']),
-                subtitle: Text('Contact No.'),
-              )
-            ],);
-          }
-        );
+
+        print(userData);
+        // final userUrl = 'https://samelocationsametaxi.firebaseio.com/users.json';
+        // final urlResponse = await http.get(userUrl);
+        // final extractedUsers = json.decode(urlResponse.body) as Map<String,dynamic>;
+        // print(extractedUsers);
+        // if(extractedUsers == null){
+        //   print('null');
+        //   return ;
+        // }
+        // extractedUsers.forEach((userid, user) {
+        //   if(userData['email'] == user['email']){
+        //     final matchedUser = user;
+        //     print(matchedUser['name']);
+        //     print(matchedUser['contactNo']);
+        //   }
+        // });
+        // showModalBottomSheet(
+        //   context: ctx, 
+        //   builder: (ctx) {
+        //     return Column(children: <Widget>[
+        //       ListTile(
+        //         leading: Icon(Icons.person),
+        //         title: Text(matchedUser['name']),
+        //         subtitle: Text('Name'),
+        //       ),
+        //       ListTile(
+        //         leading: Icon(Icons.phone),
+        //         title: Text(matchedUser['contactNo']),
+        //         subtitle: Text('Contact No.'),
+        //       )
+        //     ],);
+        //   }
+        // );
       }
+      print('No Data');
     });
   } 
 
-  Future<void> postRequest(double startLocationLat, double startLocationLong, double endLocationLat, double endLocationLong, String mode, String alreadyinVehicle, DateTime time, String userId)async{
-    final url = 'https://samelocationsametaxi.firebaseio.com/requests/$userId.json';
+  Future<void> postRequest(double startLocationLat, double startLocationLong, double endLocationLat, double endLocationLong, String mode, String alreadyinVehicle, DateTime time, String email)async{
+    final url = 'https://samelocationsametaxi.firebaseio.com/requests.json';
     try{
       final response = await http.post(
         url,
@@ -75,6 +87,7 @@ class Request with ChangeNotifier{
           'mode': mode,
           'alreadyinVehicle': alreadyinVehicle,
           'time' : time.toIso8601String(),
+          'email' : email,
         }),
       );
       print(response);
@@ -84,28 +97,12 @@ class Request with ChangeNotifier{
     }
   }
 
-  Future<void> deleteRequest(String userid)async{
-    final url = 'https://samelocationsametaxi.firebaseio.com/requests/$userid.json';
-    try{
-      await http.delete(url);
-    }catch(error){
-      print(error);
-    }
-  }
-
-  Future<void> autoDeleteRequest(String userid)async{
-    //Delete Request after 30 mins
-    final url = 'https://samelocationsametaxi.firebaseio.com/requests/$userid.json';
-    try{
-      final response = await http.get(url);
-      final responseData = json.decode(response.body) as Map<String,dynamic>;
-      final DateTime time = responseData['time'];
-      final DateTime diff = DateTime.now().subtract(Duration(minutes: 30));
-      if(time.isBefore(diff)){
-        await http.delete(url);
-      }    
-    }catch(error){
-      print(error);
-    }
-  }
+  // Future<void> deleteRequest(String userid)async{
+  //   final url = 'https://samelocationsametaxi.firebaseio.com/requests/$userid.json';
+  //   try{
+  //     await http.delete(url);
+  //   }catch(error){
+  //     print(error);
+  //   }
+  // }
 }

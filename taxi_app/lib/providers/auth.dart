@@ -31,11 +31,9 @@ class Auth with ChangeNotifier{
   }
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<String> getCurrentUserId() async {
+  Future<void> getCurrentUserId() async {
     final FirebaseUser user = await _auth.currentUser();
-    print(user);
-    final uid = user.uid.toString();
-    return uid;
+    print(user.email);
   }
 
   Future<void> _authenticate(String username, String password, String urlSegment) async {
@@ -75,12 +73,6 @@ class Auth with ChangeNotifier{
   
   Future<void> signup(String username, String password) async{
     _authenticate(username, password, 'signUp');
-  }
-
-  Future<void> login(String username, String password) async{
-    print('login');
-    _authenticate(username, password, 'signInWithPassword');
-    print('loggedIn');   
   }
 
   Future<bool> tryAutoLogin() async{

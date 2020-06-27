@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/app_drawer.dart';
+import 'package:provider/provider.dart';
 import '../widgets/profile_firebase.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileScreen extends StatelessWidget {
 
@@ -14,7 +17,9 @@ class ProfileScreen extends StatelessWidget {
       body: Column(children: <Widget>[
         FlatButton(
           child: Text('Click'),
-          onPressed: () => Provider.of<Profile>(context, listen: false).fetchProfile(context),
+          onPressed: () {
+            print('===============================');
+          },
         ),
       ],),
       drawer: AppDrawer(),

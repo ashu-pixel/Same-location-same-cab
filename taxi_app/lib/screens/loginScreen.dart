@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import './signup_screen.dart';
 import '../widgets/ui_Container.dart';
 import './main_screen.dart';
@@ -76,6 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
       final responseData = json.decode(response.body);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("email", responseData['email']);
       print("===================================");
       print(responseData);
       if(responseData['error']!=null){
