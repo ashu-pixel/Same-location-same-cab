@@ -3,10 +3,8 @@ import 'package:provider/provider.dart';
 import './screens/loginScreen.dart';
 import './screens/welcome_screen.dart';
 import './screens/signup_screen.dart';
-import './providers/auth.dart';
 import './screens/main_screen.dart';
 import './providers/users.dart';
-import './widgets/profile_firebase.dart';
 import './screens/profile.dart';
 import './screens/bill_splitter.dart';
 import './providers/request.dart';
@@ -25,19 +23,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: Auth()
-        ),
-        ChangeNotifierProvider.value(
           value: Users()
         ),
         ChangeNotifierProvider.value(
           value: Request()
         ),
-        ChangeNotifierProvider.value(
-          value: Profile()
-        )
       ],
-      child: Consumer<Auth>(builder: (ctx, auth, _) =>
+      child: 
       MaterialApp(
         title: 'Same Location, Same Taxi',
         theme: ThemeData(
@@ -53,11 +45,9 @@ class MyApp extends StatelessWidget {
           MainScreen.routeName : (ctx) => MainScreen(),
           ProfileScreen.routeName : (ctx) => ProfileScreen(),
           BillSPlitterScreen.routeName : (ctx) => BillSPlitterScreen(),
-          //MainScreen2.routeName : (ctx) => MainScreen2()
-          
         },
       )
-    )
+    
     );
   }
 }

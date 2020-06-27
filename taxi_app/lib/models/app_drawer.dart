@@ -5,14 +5,16 @@ import 'package:taxi_app/screens/welcome_screen.dart';
 import '../screens/main_screen.dart';
 import '../screens/profile.dart';
 import '../providers/auth.dart';
+import './profilemodel.dart';
 
 class AppDrawer extends StatelessWidget {
+  final name = Profilee.mydefineduser['name'];
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(children: <Widget>[
         AppBar(
-          title: Text('Hello Friend!', style: TextStyle(color: Colors.black),),
+          title: Text('Hello $name', style: TextStyle(color: Colors.black),),
           automaticallyImplyLeading: false,
           backgroundColor: Theme.of(context).accentColor
         ),
@@ -25,14 +27,14 @@ class AppDrawer extends StatelessWidget {
           },
         ),
         Divider(),
-        ListTile(
-          leading: Icon(Icons.directions_car),
-          title: Text('Your Rides'),
-          onTap: () {
-            //Navigator.of(context).pushReplacementNamed('/');
-          },
-        ),
-        Divider(),
+        // ListTile(
+        //   leading: Icon(Icons.directions_car),
+        //   title: Text('Your Rides'),
+        //   onTap: () {
+        //     //Navigator.of(context).pushReplacementNamed('/');
+        //   },
+        // ),
+        // Divider(),
         ListTile(
           leading: Icon(Icons.category),
           title: Text('Bill Splitter'),

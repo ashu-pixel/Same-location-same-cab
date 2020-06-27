@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './signup_screen.dart';
 import '../widgets/ui_Container.dart';
 import './main_screen.dart';
+import '../models/profilemodel.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -61,41 +62,61 @@ class _LoginScreenState extends State<LoginScreen> {
     _formKey.currentState.save();
     print("hi====================================");
     print(_usernameController.text);
-    print(_passwordController.text);
-    
-     final url =
-      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCE4eIGuIXww0YRBda6xsaN2fxzSiKY_cA';
-  
-      final response = await http.post(
-        url,
-        body: json.encode(
-          {
-            'email': _usernameController.text,
-            'password': _passwordController.text,
-            'returnSecureToken': true,
-          },
-        ),
-      );
-      final responseData = json.decode(response.body);
+    print(_passwordController.text);   
+    final url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCE4eIGuIXww0YRBda6xsaN2fxzSiKY_cA'; 
+    final response = await http.post(
+      url,
+      body: json.encode(
+        {
+          'email': _usernameController.text,
+          'password': _passwordController.text,
+          'returnSecureToken': true,
+        },
+      ),
+    );
+    final responseData = json.decode(response.body);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("email", responseData['email']);
+    print("===================================");
+    print(responseData);
+    if(responseData['error']!=null){
+      var error = responseData['error']['message'];
+      var message = 'Auth'; 
+      if(error.contains('EMAIL_NOT_FOUND')){
+        message = 'The entered email is not registered';
+      }else if(error.contains('INVALID_EMAIL')){
+        message = 'The entered Email is not valid. Please enter a valid email';
+      }else if(error.contains('INVALID_PASSWORD')){
+        message = 'The password you entered is incorrect';
+      }
+      print("hhhh============================================");    
+      return showErrorDialog(message);
+    }else{
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString("email", responseData['email']);
-      print("===================================");
-      print(responseData);
-      if(responseData['error']!=null){
-        var error = responseData['error']['message'];
-        var message = 'Auth'; 
-        if(error.contains('EMAIL_NOT_FOUND')){
-          message = 'The entered email is not registered';
-        }else if(error.contains('INVALID_EMAIL')){
-          message = 'The entered Email is not valid. Please enter a valid email';
-        }else if(error.contains('INVALID_PASSWORD')){
-          message = 'The password you entered is incorrect';
-        }
-        print("hhhh============================================");    
-        return showErrorDialog(message);
-      }else{
+      String emailFinal = prefs.get("email");
+      print(emailFinal);
+      final url = 'https://samelocationsametaxi.firebaseio.com/users.json';
+      final response = await http.get(url);
+      print('url fetched');
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if (extractedData == null) {
+        print('in null');
+        return;
+      }
+      print(extractedData);
+      extractedData.forEach((id, user){
+      if(emailFinal == user['username']){
+        print('======================================================================');
+        String nameu = user['name'];
+        String contactNo = user['contactNo'];
+        print(nameu);
+        print(contactNo);
+        print(user);
+        Profilee.mydefineduser=user;
         Navigator.of(context).pushReplacementNamed(MainScreen.routeName);
       }
+      });
+    }
   }
 
   @override
@@ -211,4 +232,5 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+  
 }

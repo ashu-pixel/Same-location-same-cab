@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import '../providers/request.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,6 +7,7 @@ import '../widgets/ui_Container.dart';
 import '../models/app_drawer.dart';
 import '../widgets/location_input.dart';
 import '../models/place_location.dart';
+import '../models/profilemodel.dart';
 
 class MainScreen extends StatefulWidget{
 
@@ -109,19 +109,6 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
   String email;
-
-  String getmail(){
-    getEmail().then((value) {
-      return email;
-    });
-    return email;
-  }
-
-  Future getEmail()async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    email = prefs.get("email");
-    print(email);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -290,27 +277,23 @@ class _MainScreenState extends State<MainScreen> {
             size.width*0.8
           ),
         ),
+        UiContainer(
         FlatButton(
-          child: Text('Search for a Co-Passenger'),
+          child: Text('Search for a Co-Passenger', style: TextStyle(color: Colors.white),),
           onPressed: (){
             double stlat = _pickedStartLocation.latitude;
             double stlon = _pickedStartLocation.longitude;
             double endlat = _pickedEndLocation.latitude;
             double endlong = _pickedEndLocation.longitude;
-            //String id = Provider.of<Auth>(context, listen: false).userId;
-            print(stlat);
-            print(stlon);
-            print(endlat);
-            print(endlat);
-            print(endlong);
-            print(selectedtype);
-            print(selectedResponse);
-            var email = getmail();
-            print(email);
-            Provider.of<Request>(context, listen:false).searchPassenger(context, stlat, stlon, endlat, endlong, selectedtype, selectedResponse, DateTime.now());
-            Provider.of<Request>(context, listen: false).postRequest(stlat,stlon,endlat,endlong,selectedtype,selectedResponse,DateTime.now(),email);
+            String name = Profilee.mydefineduser['name'];
+            String contactNo = Profilee.mydefineduser['contactNo'];
+            Provider.of<Request>(context, listen:false).searchPassenger(context, stlat, stlon, endlat, endlong, selectedtype, selectedResponse, DateTime.now(),name,contactNo);
+            //Provider.of<Request>(context, listen: false).postRequest(stlat,stlon,endlat,endlong,selectedtype,selectedResponse,DateTime.now(),name,contactNo);
           },
         ),
+        Theme.of(context).primaryColor,
+        size.width*0.8
+        )
         ],),
       ),
       drawer: AppDrawer(),
