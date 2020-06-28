@@ -67,11 +67,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: Text('An Error Occurred!'),
-          content: Text(message),
+          title: Text(
+            'An Error Occurred!',
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold
+            ),
+          ),
+          content: Text(
+            message,
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Okay'),
+              child: Text(
+                'Okay',
+                style: TextStyle(color: Theme.of(context).primaryColor),  
+              ),
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
@@ -101,7 +113,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         await Provider.of<Auth>(context, listen:false).signup(_newUser.username, _newUser.password);
       }on HttpException catch (error) {
         print("==================");
-    print(error);
+        print(error);
       var errorMessage = 'Authentication failed';
       if (error.toString().contains('EMAIL_EXISTS')) {
         errorMessage = 'This email address is already in use.';
@@ -240,6 +252,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return 'Password doesnt match';
                         }
                         return null;
+                      },
+                      onFieldSubmitted: (_){
+                        submit();
                       },
                     ),
                     Theme.of(context).accentColor,

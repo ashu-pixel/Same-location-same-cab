@@ -39,11 +39,25 @@ class _LoginScreenState extends State<LoginScreen> {
     return showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('An Error Occurred!'),
-        content: Text(message),
+        title: Text(
+          'An Error Occurred!',
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        content: Text(
+          message,
+          style: TextStyle(
+            color: Theme.of(context).primaryColor
+          ),
+        ),
         actions: <Widget>[
           FlatButton(
-            child: Text('Okay'),
+            child: Text(
+              'Okay',
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
             onPressed: () {
               Navigator.of(ctx).pop();
             },
@@ -56,11 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> authorize() async{
     final isValid = _formKey.currentState.validate();
     if (!isValid) {
-      print('Line 66');
       return;
     }
     _formKey.currentState.save();
-    print("hi====================================");
     print(_usernameController.text);
     print(_passwordController.text);   
     final url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCE4eIGuIXww0YRBda6xsaN2fxzSiKY_cA'; 
@@ -183,6 +195,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       return 'Password should not be empty';
                     }
                     return null;
+                  },
+                  onFieldSubmitted: (_){
+                    authorize(); 
                   },
                 ),
                 Theme.of(context).accentColor,

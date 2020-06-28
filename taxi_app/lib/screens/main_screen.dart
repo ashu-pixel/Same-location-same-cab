@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:provider/provider.dart';
-import '../providers/request.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../providers/request.dart';
 import '../widgets/ui_Container.dart';
 import '../models/app_drawer.dart';
 import '../widgets/location_input.dart';
@@ -28,7 +28,10 @@ class _MainScreenState extends State<MainScreen> {
   List<String> getType = ['Taxi', 'Rickshaw'];
   String selectedtype;
   String selectedResponse;
+  String selectedTime;
+  String selectedreply;
   List<String> getResponse = ['Yes', 'No'];
+  List<String> getTime = ['5 min','10 min','15 min','20 min','25 min','30 min'];
 
   List<DropdownMenuItem<String>> buildDropDownMenuItems(List types){
     List<DropdownMenuItem<String>> items = List();
@@ -42,6 +45,7 @@ class _MainScreenState extends State<MainScreen> {
     } 
     return items;
   }
+
   int _groupValue = -1;
   Widget _myRadioButton({String title, int value, Function onChanged}) {
   return RadioListTile(
@@ -164,7 +168,6 @@ class _MainScreenState extends State<MainScreen> {
                   icon: Icon(Icons.search),
                   focusColor: Theme.of(context).primaryColor,
                   labelText: _pickedEndLocation!=null ? getEndAddress(_pickedEndLocation.latitude, _pickedEndLocation.longitude).toString() : "Select an End Location",
-                  ///labelText: convertToAddress(_pickedEndLocation.latitude, _pickedEndLocation.longitude).toString(),
                 ),
               ),
               Theme.of(context).accentColor,
@@ -236,20 +239,35 @@ class _MainScreenState extends State<MainScreen> {
               _myRadioButton(
                 title: "Yes",
                 value: 0,
-                onChanged: (newValue) => setState(() => _groupValue = newValue),
+                onChanged: (newValue) => setState((){ 
+                  _groupValue = newValue;
+                  selectedreply = "Yes";
+                }
+                ),
               ),
               _myRadioButton(
                 title: "No",
                 value: 1,
-                onChanged: (newValue) => setState(() => _groupValue = newValue),
+                onChanged: (newValue) => setState(
+                  (){
+                    _groupValue = newValue;
+                    selectedreply = "No";
+                  }
+                ),
               ),
             ],),
             Theme.of(context).accentColor,
             size.width*0.8
           ),
         ),
-        Container(
+        AnimatedContainer(
+          constraints: BoxConstraints(
+            minHeight: selectedreply== 'Yes' ? 60 : 0,
+            maxHeight: selectedreply == 'Yes' ? 120 : 0,
+          ),
           alignment: Alignment.center,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeIn,
           child: UiContainer(
             Column(
               children: <Widget>[
@@ -277,23 +295,85 @@ class _MainScreenState extends State<MainScreen> {
             size.width*0.8
           ),
         ),
+        AnimatedContainer(
+          constraints: BoxConstraints(
+            minHeight: selectedreply == 'No' ? 60 : 0,
+            maxHeight: selectedreply == 'No' ? 120 : 0,
+          ),
+          alignment: Alignment.center,
+          duration: Duration(milliseconds: 400),
+          curve: Curves.easeIn,
+          child: Container(
+            height: 200,
+            child: UiContainer(
+              Column(
+                children: <Widget>[
+                  Text(
+                    'Select a Time-Slot',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontStyle: FontStyle.italic
+                    ),
+                  ),
+                  DropdownButton(
+                    value: selectedTime,
+                    items: buildDropDownMenuItems(getTime),
+                    onChanged: (String value){
+                      setState(() {
+                        selectedTime = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Theme.of(context).accentColor,
+              size.width*0.8
+            ),
+          ),
+        ),
         UiContainer(
         FlatButton(
           child: Text('Search for a Co-Passenger', style: TextStyle(color: Colors.white),),
           onPressed: (){
+            int time;
             double stlat = _pickedStartLocation.latitude;
             double stlon = _pickedStartLocation.longitude;
             double endlat = _pickedEndLocation.latitude;
             double endlong = _pickedEndLocation.longitude;
             String name = Profilee.mydefineduser['name'];
             String contactNo = Profilee.mydefineduser['contactNo'];
-            Provider.of<Request>(context, listen:false).searchPassenger(context, stlat, stlon, endlat, endlong, selectedtype, selectedResponse, DateTime.now(),name,contactNo);
+            if(selectedTime == '5 min'){
+              print('5 min');
+              time = 5;
+            }else if(selectedTime == '10 min'){
+              time = 10;
+              print('10');
+            }else if(selectedTime == '15 min'){
+              time = 15;
+              print('15');
+            }else if(selectedTime == '20 min'){
+              time = 20;
+              print('20');
+            }else if(selectedTime == '25 min'){
+              time = 25;
+              print('25');
+            }else if(selectedTime == '30 min'){
+              time = 30;
+              print('30');
+            }
+            DateTime finalTime = DateTime.now().add(Duration(minutes: time));
+            print(finalTime);
+            print(selectedResponse);
+            Provider.of<Request>(context, listen:false).searchPassenger(context, stlat, stlon, endlat, endlong, selectedtype, selectedResponse, finalTime,name,contactNo);
             //Provider.of<Request>(context, listen: false).postRequest(stlat,stlon,endlat,endlong,selectedtype,selectedResponse,DateTime.now(),name,contactNo);
           },
         ),
         Theme.of(context).primaryColor,
         size.width*0.8
-        )
+        ),
+        SizedBox(height: size.height*0.04)
         ],),
       ),
       drawer: AppDrawer(),

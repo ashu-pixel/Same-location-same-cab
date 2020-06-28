@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/app_drawer.dart';
 import '../models/profilemodel.dart';
+import '../models/save_image.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -14,22 +15,81 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
 
-  Future<File> imageFile;
+  File _imageFile;
+  final picker = ImagePicker();
+  Image imageFromPrefs;
 
-  pickImageFromGallery(ImageSource source){
-    imageFile = ImagePicker.pickImage(source: source);
+  loadImageFromPrefs(){
+    SaveImage.getImageFromPrefs().then((img){
+      if(img == null){
+        return;
+      }
+      setState(() {
+        imageFromPrefs = SaveImage.imageFromBase64(img);
+      });
+    });
   }
 
-  Widget showImage(){
-    return FutureBuilder<File>(
-      future: imageFile,
-      builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-        if(snapshot.connectionState == ConnectionState.done && snapshot!=null){
-          return Image.file(snapshot.data);
-        }else{
-          return Text('No image');
-        }
-      },
+  _openGallery()async{
+    final pickedImage = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      _imageFile = File(pickedImage.path);
+    });
+    SaveImage.saveImageToPrefs(SaveImage.base64String(_imageFile.readAsBytesSync()));
+  }
+
+  _openCamera()async{
+    final pickedImage = await picker.getImage(source: ImageSource.camera);
+    setState(() {
+      _imageFile = File(pickedImage.path);
+    });
+    SaveImage.saveImageToPrefs(SaveImage.base64String(_imageFile.readAsBytesSync()));
+  }
+
+  Future<void> _showDialog(BuildContext context){
+    return showDialog(
+      context: context,
+      builder: (context){
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(children: <Widget>[
+              Text(
+                'Select an option',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height*0.04,),
+              Container(
+                height: MediaQuery.of(context).size.height*0.06,
+                child: GestureDetector(
+                  child: Text(
+                    'Gallery',
+                    style: TextStyle(color: Theme.of(context).primaryColor)
+                  ),
+                  onTap: (){
+                    _openGallery();
+                    print('Gallery');
+                  },
+                ),
+              ),
+              GestureDetector(
+                child: Text(
+                  'Camera',
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+                onTap: (){
+                  _openCamera();
+                  print('Camera');
+                },
+              ),
+            ],),
+          ),
+        );
+      }
     );
   }
 
@@ -55,18 +115,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 width: 150.0,
                 height: 150.0,
-                child: showImage(),
+                child: _imageFile!=null ? 
+                CircleAvatar(
+                  backgroundImage: _imageFile==null ? imageFromPrefs : FileImage(_imageFile,),
+                  radius: 75,
+                ) : 
+                Text(''),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).accentColor,
                   borderRadius: BorderRadius.all(Radius.circular(75.0)),
                   boxShadow: [
                     BoxShadow(blurRadius: 7.0, color: Colors.black)
                   ]
                 )
-              ),
-              RaisedButton(
-                child: Text('Click'),
-                onPressed: pickImageFromGallery(ImageSource.gallery),
               ),
               SizedBox(height: 90.0),
               Text(
@@ -125,7 +186,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 )
               ],
             )
-          )
+          ),
+          Positioned(
+            top: size.height / 3.3,
+            right: size.width*0.4,
+            child: IconButton(
+              icon: Icon(Icons.camera, color: Theme.of(context).primaryColor, size: 60,),
+              onPressed: (){
+                print('Clicked');
+                _showDialog(context);
+              },
+            )
+          ),
       ],
     ),
     drawer: AppDrawer(),
