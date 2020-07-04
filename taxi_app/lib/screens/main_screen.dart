@@ -115,6 +115,19 @@ class _MainScreenState extends State<MainScreen> {
   String email;
 
   @override
+  void didChangeDependencies(){
+    if(_pickedStartLocation != null){
+      String stAdd =  getStartAddress(_pickedStartLocation.latitude, _pickedStartLocation.longitude);
+      _locationStartController.text = stAdd;
+    }
+    if(_pickedEndLocation != null){
+      String endAdd =  getEndAddress(_pickedEndLocation.latitude, _pickedEndLocation.longitude);
+      _locationEndController.text = endAdd;
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     Size size = MediaQuery.of(context).size;
@@ -337,6 +350,7 @@ class _MainScreenState extends State<MainScreen> {
         FlatButton(
           child: Text('Search for a Co-Passenger', style: TextStyle(color: Colors.white),),
           onPressed: (){
+            print('===================================');
             int time;
             double stlat = _pickedStartLocation.latitude;
             double stlon = _pickedStartLocation.longitude;
@@ -363,9 +377,15 @@ class _MainScreenState extends State<MainScreen> {
               time = 30;
               print('30');
             }
-            DateTime finalTime = DateTime.now().add(Duration(minutes: time));
-            print(finalTime);
-            print(selectedResponse);
+            DateTime finalTime = DateTime.now();
+            if(time != null){
+              finalTime = DateTime.now().add(Duration(minutes: time));
+              print(finalTime);
+              print(selectedResponse);
+            }else{
+              finalTime = DateTime.now();
+              print(selectedResponse);
+            }
             Provider.of<Request>(context, listen:false).searchPassenger(context, stlat, stlon, endlat, endlong, selectedtype, selectedResponse, finalTime,name,contactNo);
             //Provider.of<Request>(context, listen: false).postRequest(stlat,stlon,endlat,endlong,selectedtype,selectedResponse,DateTime.now(),name,contactNo);
           },

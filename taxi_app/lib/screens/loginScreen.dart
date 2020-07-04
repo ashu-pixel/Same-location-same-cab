@@ -89,6 +89,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final responseData = json.decode(response.body);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("email", responseData['email']);
+    prefs.setString("token", responseData['idToken']);
+    prefs.setString("userId", responseData['localId']);
+    final expiryDate = DateTime.now().add(Duration(seconds: int.parse(responseData['expiresIn'],),),);
+    prefs.setString('expiryDate', expiryDate.toString());
     print("===================================");
     print(responseData);
     if(responseData['error']!=null){
@@ -104,8 +108,8 @@ class _LoginScreenState extends State<LoginScreen> {
       print("hhhh============================================");    
       return showErrorDialog(message);
     }else{
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String emailFinal = prefs.get("email");
+      SharedPreferences prefs1 = await SharedPreferences.getInstance();
+      String emailFinal = prefs1.get("email");
       print(emailFinal);
       final url = 'https://samelocationsametaxi.firebaseio.com/users.json';
       final response = await http.get(url);

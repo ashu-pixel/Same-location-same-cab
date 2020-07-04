@@ -16,7 +16,7 @@ class Request with ChangeNotifier{
       print('in null');
       return ;
     }
-    print('============================================');
+    print('============================================iiii');
     print(extractedData);
     extractedData.forEach((userID, userData){
       print('=================================================');
@@ -35,9 +35,9 @@ class Request with ChangeNotifier{
         lowerstartLocLong < userData['startLocationLong'] && userData['startLocationLong'] < upperstartLocLong &&
         lowerendLocLat < userData['endLocationLat'] && userData['endLocationLat'] < upperendLocLat &&
         lowerendLocLong < userData['endLocationLong'] && userData['endLocationLong'] < upperendLocLong &&
-        mode == userData['mode'] && alreadyinVehicle == 'No' &&
-        lowertimeLimit.isBefore(DateTime.parse(userData['time'])) && uppertimeLimit.isAfter(DateTime.parse(userData[time]))
-        //&& userData['contactNo']!=contactNo
+        mode == userData['mode'] 
+        //lowertimeLimit.isBefore(DateTime.parse(userData['time'])) && uppertimeLimit.isAfter(DateTime.parse(userData[time]))
+        && userData['contactNo']!=contactNo
       ){
         print(userData['name']);
         matchedUser.add(userData);
@@ -45,7 +45,7 @@ class Request with ChangeNotifier{
       }else{
       print('No Data');
       }
-      Navigator.of(ctx).push(MaterialPageRoute(
+      Navigator.of(ctx).pushReplacement(MaterialPageRoute(
         builder: (ctx) => CoPassenger(matchedUser,startLocationLat,startLocationLong, endLocationLat, endLocationLong, mode,alreadyinVehicle,time,name,contactNo),
       ));
       },

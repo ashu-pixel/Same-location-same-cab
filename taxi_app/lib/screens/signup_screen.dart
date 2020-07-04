@@ -138,7 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       print(_newUser.contactNo);
       print(_newUser.username);
       print(_newUser.password);
-      print(Provider.of<Auth>(context, listen: false).userId);
+      //print(Provider.of<Auth>(context, listen: false).userId);
     }
 
     Size size = MediaQuery.of(context).size;
