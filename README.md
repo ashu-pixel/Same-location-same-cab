@@ -1,7 +1,8 @@
-# Same Location Same Taxi
-Team name: Same location same taxi
+# Same Location Same Taxi 
+ 
+=>Team name: Same location same taxi
 
-Team members-
+=>Team members-
 
 1. Chaitravi Chalke - 
 
@@ -11,7 +12,7 @@ Team members-
 
 4. Ayam Dhotekar - ayamdhotekar@gmail.com
 
-Description
+=>Description
 
 How do you suggest solving this problem? 
 
@@ -27,8 +28,20 @@ In most of the cases we often waste our time in stating in queue just waiting fo
 .Get to know your colleugue(if working in same company but different department) 
 
 
-GitHub repo link: Link to repository
-Drive link: Drive link here
+=>GitHub repo link: Link to repository
+=>Drive link: Drive link here
+
+=>Technology stack
+Tools and technologies that you learnt and used in the project.
+
+Language- Dart
+Framework- Flutter
+
+=> Project Setup
+One can easily download through APK and run over internet
+
+=> Future scope
+When the traffic on road will increase it will save alot of time and money
 
 
 
