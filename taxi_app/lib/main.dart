@@ -19,9 +19,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
 
-  final token = null;
-  final userId = null;
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

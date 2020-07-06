@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'loginScreen.dart';
-//import './login_screen.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import '../widgets/ui_Container.dart';
 import '../providers/user.dart';
 import '../providers/auth.dart';
@@ -20,6 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool _obscureText = true;
   bool _obscureText1 = true;
+  var _isLoading = false;
   final _phonefocus = FocusNode();
   final _usernamefocus = FocusNode();
   final _pass1focus = FocusNode();
@@ -93,7 +94,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
     }
 
+    void _showSuccessDialog(){
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(
+            'Signed Up Successfully!',
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold
+            ),
+          ),
+          content: Text(
+            'Please Login using your newly created acount.',
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                'Go to Login Screen',
+                style: TextStyle(color: Theme.of(context).primaryColor),  
+              ),
+              onPressed: () {
+                Navigator.of(ctx).pushReplacementNamed(LoginScreen.routeName);
+              },
+            )
+          ],
+        ),
+      );
+    }
+
     Future<void> submit() async{
+      setState(() {
+        _isLoading = true;
+      });
       final isValid = _formKey.currentState.validate();
       if (!isValid) {
         print('Line 66');
@@ -127,12 +161,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
         errorMessage = 'Invalid password.';
       }
       _showErrorDialog(errorMessage);
+      setState(() {
+        _isLoading = false;
+      });
+      return;
     } catch (error) {
       const errorMessage = 'Could not authenticate you. Please try again later.';
       _showErrorDialog(errorMessage);
+      throw(error);
+      
     }
       print('signup verification done');
+      setState(() {
+        _isLoading = false;
+      });
       await Provider.of<Users>(context, listen: false).addUser(_newUser);
+      _showSuccessDialog();
       print('User added');
       print(_newUser.name);
       print(_newUser.contactNo);
@@ -146,7 +190,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: Container(
         height: size.height,
         width: double.infinity,
-        child: Stack(
+        child: _isLoading == true ? Center(child: JumpingText(
+          'Please Wait...Signing Up',
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        )) : Stack(
           alignment: Alignment.center,
           children: <Widget>[
           Positioned(

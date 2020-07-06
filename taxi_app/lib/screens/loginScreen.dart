@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,6 +7,7 @@ import './signup_screen.dart';
 import '../widgets/ui_Container.dart';
 import './main_screen.dart';
 import '../models/profilemodel.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -20,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscureText = true;
+  var _isLoading = false;
   final _formKey = GlobalKey<FormState>();
   final _passwordfocus = FocusNode();
 
@@ -72,6 +75,9 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!isValid) {
       return;
     }
+    setState(() {
+      _isLoading = true;
+    });
     _formKey.currentState.save();
     print(_usernameController.text);
     print(_passwordController.text);   
@@ -108,6 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
       print("hhhh============================================");    
       return showErrorDialog(message);
     }else{
+      setState(() {
+        _isLoading = false;
+      });
       SharedPreferences prefs1 = await SharedPreferences.getInstance();
       String emailFinal = prefs1.get("email");
       print(emailFinal);
@@ -138,8 +147,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
-      body: Container(
+      body: _isLoading == true ? Center(
+        child: JumpingText('Loging In...', style: TextStyle(color: Theme.of(context).primaryColor),)
+      ) : Container(
         height: size.height,
         width: double.infinity,
         child: Stack(

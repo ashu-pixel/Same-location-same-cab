@@ -16,18 +16,16 @@ class Request with ChangeNotifier{
       print('in null');
       return ;
     }
-    print('============================================iiii');
     print(extractedData);
     extractedData.forEach((userID, userData){
-      print('=================================================');
-      double upperstartLocLat = startLocationLat + 0.5;
-      double lowerstartLocLat = startLocationLat - 0.5;
-      double upperstartLocLong = startLocationLong + 0.5;
-      double lowerstartLocLong = startLocationLong - 0.5;
-      double upperendLocLat = endLocationLat + 0.5;
-      double lowerendLocLat = endLocationLat - 0.5;
-      double upperendLocLong = endLocationLong + 0.5;
-      double lowerendLocLong = endLocationLong - 0.5;
+      double upperstartLocLat = startLocationLat + 0.03;
+      double lowerstartLocLat = startLocationLat - 0.03;
+      double upperstartLocLong = startLocationLong + 0.03;
+      double lowerstartLocLong = startLocationLong - 0.03;
+      double upperendLocLat = endLocationLat + 0.03;
+      double lowerendLocLat = endLocationLat - 0.03;
+      double upperendLocLong = endLocationLong + 0.03;
+      double lowerendLocLong = endLocationLong - 0.03;
       DateTime uppertimeLimit = time.add(Duration(minutes: 10));
       DateTime lowertimeLimit = time.subtract(Duration(minutes: 10));
       if(
@@ -35,8 +33,8 @@ class Request with ChangeNotifier{
         lowerstartLocLong < userData['startLocationLong'] && userData['startLocationLong'] < upperstartLocLong &&
         lowerendLocLat < userData['endLocationLat'] && userData['endLocationLat'] < upperendLocLat &&
         lowerendLocLong < userData['endLocationLong'] && userData['endLocationLong'] < upperendLocLong &&
-        mode == userData['mode'] 
-        //lowertimeLimit.isBefore(DateTime.parse(userData['time'])) && uppertimeLimit.isAfter(DateTime.parse(userData[time]))
+        mode == userData['mode'] &&
+        lowertimeLimit.isBefore(DateTime.parse(userData['time'])) && uppertimeLimit.isAfter(DateTime.parse(userData[time]))
         && userData['contactNo']!=contactNo
       ){
         print(userData['name']);
@@ -75,13 +73,4 @@ class Request with ChangeNotifier{
       print(error);
     }
   }
-
-  // Future<void> deleteRequest(String userid)async{
-  //   final url = 'https://samelocationsametaxi.firebaseio.com/requests.json';
-  //   try{
-  //     await http.delete(url);
-  //   }catch(error){
-  //     print(error);
-  //   }
-  // }
 }

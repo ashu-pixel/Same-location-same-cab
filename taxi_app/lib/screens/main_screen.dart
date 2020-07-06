@@ -114,17 +114,53 @@ class _MainScreenState extends State<MainScreen> {
   }
   String email;
 
+  dynamic showErrorDialog(String message) {
+    return showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(
+          'An Error Occurred!',
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        content: Text(
+          message,
+          style: TextStyle(
+            color: Theme.of(context).primaryColor
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              'Okay',
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
   @override
-  void didChangeDependencies(){
+  void initState(){
     if(_pickedStartLocation != null){
       String stAdd =  getStartAddress(_pickedStartLocation.latitude, _pickedStartLocation.longitude);
-      _locationStartController.text = stAdd;
+      setState(() {
+        _locationStartController.text = stAdd;
+      });
     }
     if(_pickedEndLocation != null){
       String endAdd =  getEndAddress(_pickedEndLocation.latitude, _pickedEndLocation.longitude);
-      _locationEndController.text = endAdd;
+      setState(() {
+        _locationEndController.text = endAdd;
+      });
     }
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
@@ -134,7 +170,6 @@ class _MainScreenState extends State<MainScreen> {
 
     void _selectStartPlace(double lat, double lng) {
       _pickedStartLocation = PlaceLocation(latitude: lat, longitude: lng, address: " ");
-      print("here====================================");
       print(_pickedStartLocation);
     }
 
@@ -159,7 +194,7 @@ class _MainScreenState extends State<MainScreen> {
                 controller: _locationStartController,
                 decoration: InputDecoration(
                   hintText: 'Select a Start Location',
-                  icon: Icon(Icons.search),
+                  icon: Icon(Icons.search, color: Theme.of(context).primaryColor),
                   focusColor: Theme.of(context).primaryColor,
                   labelText: _pickedStartLocation!=null ? getStartAddress(_pickedStartLocation.latitude, _pickedStartLocation.longitude).toString() : "Select a Start Location",
                 ),
@@ -178,7 +213,7 @@ class _MainScreenState extends State<MainScreen> {
                 controller: _locationEndController,
                 decoration: InputDecoration(
                   hintText: 'Select An End Location',
-                  icon: Icon(Icons.search),
+                  icon: Icon(Icons.search, color: Theme.of(context).primaryColor,),
                   focusColor: Theme.of(context).primaryColor,
                   labelText: _pickedEndLocation!=null ? getEndAddress(_pickedEndLocation.latitude, _pickedEndLocation.longitude).toString() : "Select an End Location",
                 ),
@@ -195,6 +230,10 @@ class _MainScreenState extends State<MainScreen> {
               FlatButton(
                 child: Text('Show Locations on map', style: TextStyle(color: Colors.white),),
                 onPressed: ()async{
+                  if(_pickedStartLocation == null || _pickedEndLocation == null){
+                    showErrorDialog('Start Location and Destination should be selected');
+                    return;
+                  }
                   _launchNav(
                     _pickedStartLocation.latitude, 
                     _pickedStartLocation.longitude, 
@@ -350,6 +389,10 @@ class _MainScreenState extends State<MainScreen> {
         FlatButton(
           child: Text('Search for a Co-Passenger', style: TextStyle(color: Colors.white),),
           onPressed: (){
+            if(_pickedStartLocation == null || _pickedEndLocation == null || selectedtype == null || selectedResponse == null ){
+              showErrorDialog('All Fields are mandatory');
+              return;
+            }
             print('===================================');
             int time;
             double stlat = _pickedStartLocation.latitude;
