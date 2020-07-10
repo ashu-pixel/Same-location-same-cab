@@ -14,8 +14,8 @@
 
 ## **=>Mentors-**
 
-1. Palak Mantry
-2. Yogesh
+1. Yogesh Deshpande - yogesh1122554
+2. Palak Mantry - pal-16
 
 
 ## **=>Description**
