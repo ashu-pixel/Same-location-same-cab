@@ -4,11 +4,11 @@
 
 ## **=>Team members-**
 
-1. Chaitravi Chalke -
+1. Chaitravi Chalke - chaitravi007@gmail.com
 
 2. Ashutosh Gupta - ashutoshgupta1704@gmail.com
 
-3. Ved Samant -
+3. Ved Samant - vedsamant24@gmail.com
 
 4. Ayam Dhotekar - ayamdhotekar@gmail.com
 
@@ -28,7 +28,7 @@ In most of the cases we often waste our time in stating in queue just waiting fo
 .Get to know your colleugue(if working in same company but different department)
 
 
-## **=>GitHub repo link: Link to repository**
+## **=>GitHub repo link: https://github.com/ashu-pixel/Same-location-same-cab**
 
 ## **=>Drive link: Drive link here**
 
@@ -39,7 +39,8 @@ Language- Dart
 Framework- Flutter
 
 ## **=> Project Setup**
+Mobile operating systems: Android Jelly Bean, v16, 4.1. x or newer, and iOS 8 or newer.
 One can easily download through APK and run over internet
 
 ## **=> Future scope**
-When the traffic on road will increase it will save alot of time and money
+When the traffic on road will increase it will save alot of time and money 
