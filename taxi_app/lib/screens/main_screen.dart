@@ -69,7 +69,6 @@ class _MainScreenState extends State<MainScreen> {
 
   String getEndAddress(double latitude, double longitude){
     convertToEndAddress(latitude, longitude).then((value) {
-      print("hi======================================");
       print(endaddress);
       return endaddress;
    });
@@ -399,6 +398,7 @@ class _MainScreenState extends State<MainScreen> {
             double stlon = _pickedStartLocation.longitude;
             double endlat = _pickedEndLocation.latitude;
             double endlong = _pickedEndLocation.longitude;
+            String username = Profilee.mydefineduser['username'];
             String name = Profilee.mydefineduser['name'];
             String contactNo = Profilee.mydefineduser['contactNo'];
             if(selectedTime == '5 min'){
@@ -429,6 +429,8 @@ class _MainScreenState extends State<MainScreen> {
               finalTime = DateTime.now();
               print(selectedResponse);
             }
+            //print('===================================');
+            //print(username);
             Provider.of<Request>(context, listen:false).searchPassenger(context, stlat, stlon, endlat, endlong, selectedtype, selectedResponse, finalTime,name,contactNo);
             //Provider.of<Request>(context, listen: false).postRequest(stlat,stlon,endlat,endlong,selectedtype,selectedResponse,DateTime.now(),name,contactNo);
           },

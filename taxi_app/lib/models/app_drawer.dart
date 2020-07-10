@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/screens/bill_splitter.dart';
 import 'package:provider/provider.dart';
+import 'package:taxi_app/screens/ride_request_screen.dart';
 import 'package:taxi_app/screens/welcome_screen.dart';
 import '../screens/rickshaw_rates_screen.dart';
 import '../screens/taxi_rates_screens.dart';
@@ -30,14 +31,14 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           Divider(),
-          // ListTile(
-          //   leading: Icon(Icons.directions_car),
-          //   title: Text('Your Rides'),
-          //   onTap: () {
-          //     //Navigator.of(context).pushReplacementNamed('/');
-          //   },
-          // ),
-          // Divider(),
+          ListTile(
+            leading: Icon(Icons.directions_car),
+            title: Text('Your Requests'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(RideRequests.routeName);
+            },
+          ),
+          Divider(),
           ListTile(
             leading: Icon(Icons.category),
             title: Text('Bill Splitter'),
@@ -76,7 +77,7 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Provider.of<Auth>(context, listen: false).logout();
               Navigator.of(context).pop();
-              Navigator.of(context).pushNamed(WelcomeScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(WelcomeScreen.routeName);
             },
           ),
         ],),

@@ -12,6 +12,7 @@ import './providers/auth.dart';
 import './screens/taxi_rates_screens.dart';
 import './screens/rickshaw_rates_screen.dart';
 import './screens/splash_screen.dart';
+import './screens/ride_request_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
           BillSPlitterScreen.routeName : (ctx) => BillSPlitterScreen(),
           TaxiRatesScreen.routeName : (ctx) => TaxiRatesScreen(),
           RickshawRatesScreen.routeName : (ctx) => RickshawRatesScreen(),
+          RideRequests.routeName : (ctx) => RideRequests(),
         },
       )
       )
