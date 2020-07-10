@@ -12,6 +12,12 @@
 
 4. Ayam Dhotekar - ayamdhotekar@gmail.com
 
+## **=>Mentors-**
+
+1. Palak Mantry
+2. Yogesh
+
+
 ## **=>Description**
 
 How do you suggest solving this problem?
