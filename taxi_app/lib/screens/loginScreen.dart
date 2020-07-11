@@ -158,110 +158,113 @@ class _LoginScreenState extends State<LoginScreen> {
         height: size.height,
         width: double.infinity,
         child: Stack(
-          alignment: Alignment.center,
+          //alignment: Alignment.center,
           children: <Widget>[
           Positioned(
             top: 0,
             left: 0,
             child: Image.asset("assets/images/main_top.png", width: size.width*0.3,),
           ),
-          Column(children: <Widget>[
-            SizedBox(height: size.height*0.15),
-            Text('LOGIN', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
-            SizedBox(height: size.height*0.03,),
-            Form(
-              key: _formKey,
-              child: Column(children: <Widget>[
-              UiContainer(
-                TextFormField(
-                  controller: _usernameController,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.person, color: Theme.of(context).primaryColor,),
-                    hintText: 'Username'
-                  ),
-                  onFieldSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(_passwordfocus);
-                  },
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Username should not be empty';
-                    }
-                    return null;
-                  },
-                ),
-                Theme.of(context).accentColor,
-                size.width*0.8,
-              ),
-              UiContainer(
-                TextFormField(
-                  obscureText: _obscureText,
-                  controller: _passwordController,
-                  focusNode: _passwordfocus,
-                  decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.lock, 
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.visibility), 
-                      color: Theme.of(context).primaryColor,
-                      onPressed: toggleSeen,  
-                    ),
-                    hintText: 'Password',
-                  ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Password should not be empty';
-                    }
-                    return null;
-                  },
-                  onFieldSubmitted: (_){
-                    authorize(); 
-                  },
-                ),
-                Theme.of(context).accentColor,
-                size.width*0.8
-              ),
-            ])
-            ),
-            UiContainer(
-              FlatButton(
-                onPressed: authorize, 
-                child: Text('Login', style: TextStyle(color: Colors.white),)
-              ),
-              Theme.of(context).primaryColor,
-              size.width*0.4
-            ),
-            SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-              Text(
-                "Don't have an accout ?", 
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor, 
-                ),
-              ),
-              SizedBox(width: 5,),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushReplacementNamed(SignUpScreen.routeName);
-                },
-                child: Text(
-                  'Sign Up', 
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor, 
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-              )
-            ],)
-          ],),
           Positioned(
             bottom: 0,
             right: 0,
             child: Image.asset("assets/images/login_bottom.png", width: size.width*0.5),
-          )
+          ),
+          SingleChildScrollView(
+            child: Column(children: <Widget>[
+              SizedBox(height: size.height*0.15),
+              Text('LOGIN', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
+              SizedBox(height: size.height*0.03,),
+              Form(
+                key: _formKey,
+                child: Column(children: <Widget>[
+                UiContainer(
+                  TextFormField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.person, color: Theme.of(context).primaryColor,),
+                      hintText: 'Username (Email ID)'
+                    ),
+                    onFieldSubmitted: (_) {
+                      FocusScope.of(context).requestFocus(_passwordfocus);
+                    },
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Username should not be empty';
+                      }
+                      return null;
+                    },
+                  ),
+                  Theme.of(context).accentColor,
+                  size.width*0.8,
+                ),
+                UiContainer(
+                  TextFormField(
+                    obscureText: _obscureText,
+                    controller: _passwordController,
+                    focusNode: _passwordfocus,
+                    decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.lock, 
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.visibility), 
+                        color: Theme.of(context).primaryColor,
+                        onPressed: toggleSeen,  
+                      ),
+                      hintText: 'Password',
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Password should not be empty';
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (_){
+                      authorize(); 
+                    },
+                  ),
+                  Theme.of(context).accentColor,
+                  size.width*0.8
+                ),
+              ])
+              ),
+              UiContainer(
+                FlatButton(
+                  onPressed: authorize, 
+                  child: Text('Login', style: TextStyle(color: Colors.white),)
+                ),
+                Theme.of(context).primaryColor,
+                size.width*0.4
+              ),
+              SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                Text(
+                  "Don't have an accout ?", 
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor, 
+                  ),
+                ),
+                SizedBox(width: 5,),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed(SignUpScreen.routeName);
+                  },
+                  child: Text(
+                    'Sign Up', 
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor, 
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                )
+              ],),
+              SizedBox(height: size.height*0.15),
+            ],),
+          ),         
         ],),
       ),
     );

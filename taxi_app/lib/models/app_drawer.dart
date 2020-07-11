@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_app/providers/request.dart';
 import 'package:taxi_app/screens/bill_splitter.dart';
 import 'package:provider/provider.dart';
 import 'package:taxi_app/screens/ride_request_screen.dart';
@@ -34,7 +35,8 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.directions_car),
             title: Text('Your Requests'),
-            onTap: () {
+            onTap: (){ 
+              Provider.of<Request>(context,listen:false).fetchRequests();
               Navigator.of(context).pushReplacementNamed(RideRequests.routeName);
             },
           ),

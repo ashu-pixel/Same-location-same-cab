@@ -60,8 +60,8 @@ class _MainScreenState extends State<MainScreen> {
 
   String getStartAddress(double latitude, double longitude){
    convertToStartAddress(latitude, longitude).then((value) {
-     print("hi======================================");
-     print(staddress);
+     //print("hi======================================");
+     //print(staddress);
      return staddress;
    });
    return staddress;
@@ -69,14 +69,14 @@ class _MainScreenState extends State<MainScreen> {
 
   String getEndAddress(double latitude, double longitude){
     convertToEndAddress(latitude, longitude).then((value) {
-      print(endaddress);
+      //print(endaddress);
       return endaddress;
    });
    return endaddress;
   }
 
   Future<void>convertToEndAddress(double latitude, double longitude)async{
-    print("coming here");
+    //print("coming here");
 
     final coordinates = new Coordinates(latitude, longitude);
     var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
@@ -84,13 +84,13 @@ class _MainScreenState extends State<MainScreen> {
     print(first);
     endaddress=first.addressLine.toString();
     print(first.addressLine.runtimeType);
-    print("=======================");
+    //print("=======================");
     //print(first.toString());
     return first.addressLine;
   }
 
   Future<void>convertToStartAddress(double latitude, double longitude)async{
-    print("coming here");
+    //print("coming here");
 
     final coordinates = new Coordinates(latitude, longitude);
     var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
@@ -98,7 +98,7 @@ class _MainScreenState extends State<MainScreen> {
     print(first);
     staddress=first.addressLine.toString();
     print(first.addressLine.runtimeType);
-    print("=======================");
+    //print("=======================");
     //print(first.toString());
     return first.addressLine;
   }
@@ -388,7 +388,8 @@ class _MainScreenState extends State<MainScreen> {
         FlatButton(
           child: Text('Search for a Co-Passenger', style: TextStyle(color: Colors.white),),
           onPressed: (){
-            if(_pickedStartLocation == null || _pickedEndLocation == null || selectedtype == null || selectedResponse == null ){
+            print('--------------');
+            if(_pickedStartLocation == null || _pickedEndLocation == null || selectedtype == null || selectedreply == null || (selectedResponse == null && selectedTime == null)){
               showErrorDialog('All Fields are mandatory');
               return;
             }
@@ -429,9 +430,9 @@ class _MainScreenState extends State<MainScreen> {
               finalTime = DateTime.now();
               print(selectedResponse);
             }
-            //print('===================================');
-            //print(username);
-            Provider.of<Request>(context, listen:false).searchPassenger(context, stlat, stlon, endlat, endlong, selectedtype, selectedResponse, finalTime,name,contactNo);
+            print('===================================');
+            print("username");
+            Provider.of<Request>(context, listen:false).searchPassenger(context, stlat, stlon, endlat, endlong, selectedtype, selectedResponse, finalTime,name,contactNo,username);
             //Provider.of<Request>(context, listen: false).postRequest(stlat,stlon,endlat,endlong,selectedtype,selectedResponse,DateTime.now(),name,contactNo);
           },
         ),
