@@ -55,4 +55,12 @@ One can easily download through APK and run over internet
 When the traffic on road will increase it will save alot of time and money 
 
 
-## **=>[Screenshots](https://drive.google.com/drive/folders/14fCD0Q1HldDsF27TrfKGsormlWXevHeN?usp=sharing)**
+## **=>[Screenshots]**
+!<img src="https://drive.google.com/file/d/159XRPTbLSdScKh6rAkQxopI7PkrGEo2n/view?usp=sharing" height = 450/>
+!<img src="https://drive.google.com/file/d/14tnGBW4chJmRHK91Z1TPUYSk4FBvM8LW/view?usp=sharing" height = 450/>
+!<img src="https://drive.google.com/file/d/159N7edGGkqDle6K7mETQIzG6qJPnPkhu/view?usp=sharing" height = 450/>
+!<img src="https://drive.google.com/file/d/14vPCOvApcqsEjGy5RWouP9Jw667XRVlC/view?usp=sharing" height = 450/>
+
+
+
+
