@@ -34,9 +34,9 @@ In most of the cases we often waste our time in stating in queue just waiting fo
 .Get to know your colleugue(if working in same company but different department)
 
 
-## **=>GitHub repo link: https://github.com/ashu-pixel/Same-location-same-cab**
+## **=>[GitHub repo link](https://github.com/ashu-pixel/Same-location-same-cab)**
 
-## **=>Drive link: Drive link here**
+## **=>[Drive link(APK and Demo Video)](https://drive.google.com/drive/folders/11zvqmKNoemS1KhR8XkMvvGeUnvqIgEsN?usp=sharing)**
 
 ## **=>Technology stack**
 Tools and technologies that you learnt and used in the project.
