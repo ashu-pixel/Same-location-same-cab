@@ -53,3 +53,6 @@ One can easily download through APK and run over internet
 
 ## **=> Future scope**
 When the traffic on road will increase it will save alot of time and money 
+
+
+## **=>[Screenshots](https://drive.google.com/drive/folders/14fCD0Q1HldDsF27TrfKGsormlWXevHeN?usp=sharing)**
