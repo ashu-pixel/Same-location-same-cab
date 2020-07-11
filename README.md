@@ -44,6 +44,8 @@ Tools and technologies that you learnt and used in the project.
 
 Language- Dart
 Framework- Flutter
+## **=>[Flowchart](https://app.lucidchart.com/publicSegments/view/19605bf4-3135-401d-927f-dd89a355d0ad/image.jpeg)**
+
 
 ## **=> Project Setup**
 Mobile operating systems: Android Jelly Bean, v16, 4.1. x or newer, and iOS 8 or newer.
