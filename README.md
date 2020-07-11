@@ -45,7 +45,7 @@ Tools and technologies that you learnt and used in the project.
 Language- Dart
 Framework- Flutter
 ## **=>[Flowchart]**
-!<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/FLOWCHART.jpeg" height = 550/>
+<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/FLOWCHART.jpeg" height = 550/>
 
 
 ## **=> Project Setup**
@@ -57,10 +57,10 @@ When the traffic on road will increase it will save alot of time and money
 
 
 ## **=>[Screenshots]**
-!<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Additional%20features.jpg" height = 450/>
-!<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Connect%20To%20User.jpg" height = 450/>
-!<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Login%20Screen.jpg" height = 450/>
-!<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Taxi%20Rates(Mumbai).jpg" height = 450/>
+<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Additional%20features.jpg" height = 450/>
+<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Connect%20To%20User.jpg" height = 450/>
+<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Login%20Screen.jpg" height = 450/>
+<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Taxi%20Rates(Mumbai).jpg" height = 450/>
 
 
 
