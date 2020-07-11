@@ -45,7 +45,7 @@ Tools and technologies that you learnt and used in the project.
 Language- Dart
 Framework- Flutter
 ## **=>[Flowchart]**
-!<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/FLOWCHART.jpeg" height = 450/>
+!<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/FLOWCHART.jpeg" height = 550/>
 
 
 ## **=> Project Setup**
