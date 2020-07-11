@@ -56,10 +56,10 @@ When the traffic on road will increase it will save alot of time and money
 
 
 ## **=>[Screenshots]**
-!<img src="https://drive.google.com/file/d/159XRPTbLSdScKh6rAkQxopI7PkrGEo2n/view?usp=sharing" height = 450/>
-!<img src="https://drive.google.com/file/d/14tnGBW4chJmRHK91Z1TPUYSk4FBvM8LW/view?usp=sharing" height = 450/>
-!<img src="https://drive.google.com/file/d/159N7edGGkqDle6K7mETQIzG6qJPnPkhu/view?usp=sharing" height = 450/>
-!<img src="https://drive.google.com/file/d/14vPCOvApcqsEjGy5RWouP9Jw667XRVlC/view?usp=sharing" height = 450/>
+!<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Additional%20features.jpg" height = 450/>
+!<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Connect%20To%20User.jpg" height = 450/>
+!<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Login%20Screen.jpg" height = 450/>
+!<img src="https://github.com/ashu-pixel/Same-location-same-cab/blob/master/Taxi%20Rates(Mumbai).jpg" height = 450/>
 
 
 
