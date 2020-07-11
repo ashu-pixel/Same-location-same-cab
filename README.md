@@ -20,7 +20,7 @@
 
 ## **=>Description**
 
-How do you suggest solving this problem?
+How do we suggest solving this problem?
 
 In most of the cases we often waste our time in stating in queue just waiting for taxi (who have hell of problems to go anywhere). Though the distance might be short the fare goes up high due to stuck in traffic(which is not the problem for concern) instead if two people willing to go at same place(or somewhere enroute) the can share the same taxi.
 
@@ -36,7 +36,8 @@ In most of the cases we often waste our time in stating in queue just waiting fo
 
 ## **=>[GitHub repo link](https://github.com/ashu-pixel/Same-location-same-cab)**
 
-## **=>[Drive link(APK and Demo Video)](https://drive.google.com/drive/folders/11zvqmKNoemS1KhR8XkMvvGeUnvqIgEsN?usp=sharing)**
+## **=>[Demo Video](https://drive.google.com/drive/folders/1gskYiCOjORkOESwn4YyHuAym87MjfFKz?usp=sharing)**
+## **=>[APK File](https://drive.google.com/file/d/1ui-Fai41RLQeoxrtrnWaRNEa5IpR4Hsx/view?usp=sharing)**
 
 ## **=>Technology stack**
 Tools and technologies that you learnt and used in the project.
