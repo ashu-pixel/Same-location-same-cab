@@ -44,7 +44,7 @@ Tools and technologies that you learnt and used in the project.
 
 Language- Dart
 Framework- Flutter
-## **=>[Flowchart](https://app.lucidchart.com/publicSegments/view/19605bf4-3135-401d-927f-dd89a355d0ad/image.jpeg)**
+=>[Flowchart](https://app.lucidchart.com/publicSegments/view/19605bf4-3135-401d-927f-dd89a355d0ad/image.jpeg)
 
 
 ## **=> Project Setup**
@@ -55,4 +55,4 @@ One can easily download through APK and run over internet
 When the traffic on road will increase it will save alot of time and money 
 
 
-## **=>[Screenshots](https://drive.google.com/drive/folders/14fCD0Q1HldDsF27TrfKGsormlWXevHeN?usp=sharing)**
+=>[Screenshots](https://drive.google.com/drive/folders/14fCD0Q1HldDsF27TrfKGsormlWXevHeN?usp=sharing)
