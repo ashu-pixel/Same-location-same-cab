@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import './loginScreen.dart';
 import './signup_screen.dart';
 
@@ -23,9 +24,14 @@ class WelcomeScreen extends StatelessWidget {
             ),
             Column(
               children: <Widget>[
-                SizedBox(height: size.height*0.15,),
+                SizedBox(height: size.height*0.08,),
+                SvgPicture.asset(
+                  "assets/icons/chat.svg",
+                  height: size.height*0.4,
+                ),
+                SizedBox(height: size.height*0.04,),
                 Text('Welcome', style: TextStyle(fontSize: 40, fontStyle: FontStyle.italic),),
-                SizedBox(height: size.height*0.06,),
+                SizedBox(height: size.height*0.04,),
                 Container(
                   width: size.width*0.8,
                   child: ClipRRect(
@@ -40,7 +46,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 15,),
                 Container(
                   width: size.width*0.8,
                   child: ClipRRect(
@@ -62,7 +68,6 @@ class WelcomeScreen extends StatelessWidget {
               left: 0,
               child: Image.asset("assets/images/main_bottom.png", width: size.width*0.3,),
             ),
-
           ],
         )
       )

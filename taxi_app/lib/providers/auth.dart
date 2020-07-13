@@ -13,7 +13,7 @@ class Auth with ChangeNotifier{
   String userId;
 
   bool get isAuth {
-    tryAutoLogin();
+    //tryAutoLogin();
     if(token != null){
       return true;
     }
@@ -49,9 +49,10 @@ class Auth with ChangeNotifier{
   Future<bool> tryAutoLogin()async{
     final prefs = await SharedPreferences.getInstance();
     token = prefs.get('token');
-    //print('=================================================================');
-    //print(token);
+    print('=================================================================');
+    print(token);
     if(token == null){
+      notifyListeners();
       return false;
     }
     notifyListeners();

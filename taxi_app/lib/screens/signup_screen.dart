@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'loginScreen.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import '../widgets/ui_Container.dart';
@@ -201,10 +202,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
             left: 0,
             child: Image.asset("assets/images/signup_top.png", width: size.width*0.3,),
           ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            child: Image.asset("assets/images/main_bottom.png", width: size.width*0.23),
+          ),
           SingleChildScrollView(
             child: Column(children: <Widget>[
-              Text('SIGN UP', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-              SizedBox(height: size.height*0.02,),
+              SizedBox(height: size.height*0.1,),
+              Text('SIGN UP', style: TextStyle(
+                fontSize: 30, 
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic
+              ),),
+              SizedBox(height: size.height*0.015,),
+              SvgPicture.asset("assets/icons/signup.svg"),
+              SizedBox(height: size.height*0.015,),
               Form(
                 key: _formKey,
                 child: Column(children: <Widget>[
@@ -340,14 +353,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 )
-              ],)
+              ],),
+              SizedBox(height: size.height*0.1,),
             ],),
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: Image.asset("assets/images/main_bottom.png", width: size.width*0.23),
-          )
         ],),
       ),
     );

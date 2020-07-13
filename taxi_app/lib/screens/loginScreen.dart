@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -114,9 +115,6 @@ class _LoginScreenState extends State<LoginScreen> {
       print("hhhh============================================");    
       return showErrorDialog(message);
     }else{
-      setState(() {
-        _isLoading = false;
-      });
       SharedPreferences prefs1 = await SharedPreferences.getInstance();
       String emailFinal = prefs1.get("email");
       print(emailFinal);
@@ -138,6 +136,9 @@ class _LoginScreenState extends State<LoginScreen> {
         print(contactNo);
         print(user);
         Profilee.mydefineduser=user;
+        setState(() {
+          _isLoading = false;
+        });
         Navigator.of(context).pushReplacementNamed(MainScreen.routeName);
       }
       });
@@ -158,7 +159,6 @@ class _LoginScreenState extends State<LoginScreen> {
         height: size.height,
         width: double.infinity,
         child: Stack(
-          //alignment: Alignment.center,
           children: <Widget>[
           Positioned(
             top: 0,
@@ -172,8 +172,14 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           SingleChildScrollView(
             child: Column(children: <Widget>[
-              SizedBox(height: size.height*0.15),
-              Text('LOGIN', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
+              SizedBox(height: size.height*0.1),
+              Text('LOGIN', style: TextStyle(
+                fontSize: 30, 
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: size.height*0.05,),
+              SvgPicture.asset("assets/icons/login.svg"),
               SizedBox(height: size.height*0.03,),
               Form(
                 key: _formKey,

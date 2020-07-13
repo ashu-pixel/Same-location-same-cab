@@ -1,4 +1,4 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './screens/loginScreen.dart';
 import './screens/welcome_screen.dart';
@@ -34,18 +34,14 @@ class MyApp extends StatelessWidget {
           value: Auth()
         )
       ],
-      child: Consumer<Auth>(builder: (ctx, auth, _) => MaterialApp(
+      child: MaterialApp(
         title: 'Same Location, Same Taxi',
         theme: ThemeData(
           primaryColor: Color(0xFF6F35A5),
           accentColor: Color(0xFFF1E6FF),
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: auth.isAuth ? MainScreen() 
-        : FutureBuilder(future: auth.tryAutoLogin(), builder: (ctx, authResultSnapshot) => 
-          authResultSnapshot.connectionState == ConnectionState.waiting 
-          ? SplashScreen() 
-          : WelcomeScreen(),),
+        home: SplashScreen(),
         routes: {
           WelcomeScreen.routeName : (ctx) => WelcomeScreen(),
           LoginScreen.routeName : (ctx) => LoginScreen(),
@@ -58,7 +54,6 @@ class MyApp extends StatelessWidget {
           RickshawRatesScreen.routeName : (ctx) => RickshawRatesScreen(),
           RideRequests.routeName : (ctx) => RideRequests(),
         },
-      )
       )
     );
   }
