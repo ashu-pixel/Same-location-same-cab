@@ -27,11 +27,10 @@ In most of the cases we often waste our time in stating in queue just waiting fo
 
 ## **=>Advantages ???**
 
-. Fare gets divided  
-. Nos of taxies will ultimately be reduced as people are using same taxies
-. Low nos taxies will help in controlling the pollution in some or the other way
-. Crowd in buses will reduce(This will help people who can just afford bus)
-. Get to know your colleugue(if working in same company but different department)
+* Fare gets divided
+* Nos of taxies will ultimately be reduced as people are using same taxies 
+* Low nos taxies will help in controlling the pollution in some or the other way * Crowd in buses will reduce(This will help people who can just afford bus) 
+* Get to know your colleugue(if working in same company but different department)
 
 
 ## **=>[GitHub repo link](https://github.com/ashu-pixel/Same-location-same-cab)**
