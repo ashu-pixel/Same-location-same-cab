@@ -248,11 +248,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextFormField(
                       decoration: InputDecoration(
                         icon: Icon(Icons.account_circle, color: Theme.of(context).primaryColor,),
-<<<<<<< HEAD
                         hintText: 'Username (Email ID)'
-=======
-                        hintText: 'Username / Email ID'
->>>>>>> 6f687d10551068a0367e479d9a8c9cdcccb41d13
                       ),
                       focusNode: _usernamefocus,
                       onFieldSubmitted: (_) {
